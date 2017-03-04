@@ -1,0 +1,41 @@
+//----------------------------------------------------------------------------//
+//---        Tất cả các JSON đều bảo vệ bằng JSON WEB TOKEN                ---//
+//----------------------------------------------------------------------------//
+
+[*] http://localhost:3000/forgotPassword
+-email
+
+=> Check email trong db -> Tồn tại -> Send về email 1 nội dung (Nội dung này sẽ bàn sau) -> Send Json thông báo.
+=> Check email trong db -> Ko Tồn tại -> Send Json thông báo.
+
+
+[*] http://localhost:3000/createUser
+-email
+-username
+-phone
+
+=> Check username và email trong db, OK -> ||
+||=> Lấy sđt, sinh mã code -> gửi về cho sdt đó -> send về app json.
+
+=> Check username và email trong db, ERROR -> send về app json.
+
+
+[*] http://localhost:3000/active
+-firstname
+-lastname
+-email
+-username
+-password
+-phone
+-code active
+
+=> Check code ứng với sdt đó. Nếu ok -> Lưu db -> Send json thông báo.
+=> Check code ứng với sdt đó. ERROR -> Send json thông báo.
+
+
+[*] http://localhost:3000/login
+-username
+-password
+
+=> Login thất bại -> Trả về Lỗi [- username sai, password sai -] JSON.
+=> Login thành công -> Trả về token + user dưới dạng json.
