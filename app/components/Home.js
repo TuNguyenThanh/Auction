@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
-import { View, Text, ListView, TouchableOpacity, Dimensions, Image, StyleSheet } from 'react-native';
+import {
+  View, Text, ListView, TouchableOpacity, Dimensions, Image, StyleSheet
+} from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import SideMenu from 'react-native-side-menu';
+import Menu from './Menu';
+import { Header } from './common';
 
 const { width, height } = Dimensions.get('window');
 
 class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+    };
+  }
+
   componentWillMount() {
     this.props.productFetchData();
     this.createDataSource(this.props);
@@ -13,6 +26,20 @@ class Home extends Component {
     this.createDataSource(nextProps);
   }
 
+  onPressProductRow(item) {
+    Actions.detail({ title: item.ten });
+  }
+
+  toggleMenu() {
+    this.setState({
+      isOpen: !this.state.isOpen,
+    });
+  }
+
+  updateMenuState(isOpen) {
+    this.setState({ isOpen });
+  }
+
   createDataSource({ product }) {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
@@ -20,29 +47,20 @@ class Home extends Component {
     this.dataSource = ds.cloneWithRows(product);
   }
 
-  // <View style={{ flex: 2 }}>
-  //   <Text>{item.ten}</Text>
-  //   <Text>{item.gia}</Text>
-  //   <Text>{item.thoigianbatdau}</Text>
-  //   <Text>{item.thoigianketthuc}</Text>
-  // </View>
-
   renderRow(item) {
     //console.log(item);
     return (
-      <View style={styles.row}>
+      <TouchableOpacity style={styles.row} onPress={this.onPressProductRow.bind(this, item)}>
         <Image
           style={{ flex: 1 }}
           source={{ uri: 'https://www.imore.com/sites/imore.com/files/styles/larger_wm_blw/public/field/image/2016/11/macbook-pro-2016-coffee-hero.jpg?itok=aqJZaHN_' }}
         />
-        <View style={{ flex: 1 }}>
-          <Text style={styles.textProduct}>Macbook pro retina 2016 99% i7 512SSD</Text>
+        <View>
+          <Text style={styles.textProduct} numberOfLines={2}>
+            Macbook pro retina 2016 99% i7 512SSD
+          </Text>
           <View style={styles.viewItem}>
-            <Image
-              style={styles.icon}
-              source={require('./images/user.png')}
-            />
-            <Text>Thanh Tu</Text>
+            <Text style={styles.textPriceNow}>45.000</Text>
           </View>
           <View style={styles.viewItem}>
             <Image
@@ -58,19 +76,35 @@ class Home extends Component {
             <Text style={styles.textAuction}>Đấu giá</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <ListView
-          enableEmptySections
-          contentContainerStyle={styles.listView}
-          dataSource={this.dataSource}
-          renderRow={this.renderRow.bind(this)}
-        />
+        <SideMenu
+          isOpen={this.state.isOpen}
+          onChange={(isOpen) => this.updateMenuState(isOpen)}
+          menu={<Menu navigator={navigator} />}
+        >
+          <Header
+            title={'STU'}
+            titleColor={'#646464'}
+            bgColor={'#F8F8F8'}
+            leftHeaderButtonIcon={require('./images/menu.png')}
+            rightHeaderButtonIcon={require('./images/edit.png')}
+            onItemLeftPress={this.toggleMenu.bind(this)}
+            onItemRightPress={() => alert('add')}
+          />
+          <ListView
+            style={{ backgroundColor: '#EBEBEB' }}
+            enableEmptySections
+            contentContainerStyle={styles.listView}
+            dataSource={this.dataSource}
+            renderRow={this.renderRow.bind(this)}
+          />
+        </SideMenu>
       </View>
     );
   }
@@ -79,8 +113,7 @@ class Home extends Component {
 const styles = {
   container: {
     flex: 1,
-    marginTop: 60,
-    backgroundColor: 'rgba(246, 246, 246, 0.6)'
+    backgroundColor: '#EBEBEB'
   },
 
   btnAuction: {
@@ -102,7 +135,7 @@ const styles = {
 
   row: {
     width: ((width / 2) - 10),
-    height: height / 2.5,
+    height: height / 2.4,
     borderRadius: 2,
     borderColor: '#D8D8D8',
     borderWidth: StyleSheet.hairlineWidth,
@@ -122,8 +155,12 @@ const styles = {
     color: 'red',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: 15,
     marginBottom: 4
+  },
+
+  textPriceNow: {
+    color: 'red',
+    fontWeight: '700',
   },
 
   bid: {
@@ -149,3 +186,8 @@ const styles = {
 };
 
 export default Home;
+
+// Actions.refresh({
+//   rightTitle: 'Add', onRight: this.toggleMenu.bind(this)
+// });
+//

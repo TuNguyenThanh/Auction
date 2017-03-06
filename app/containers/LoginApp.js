@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import LoginForm from '../components/LoginForm';
@@ -7,11 +8,16 @@ import {
 } from '../actions';
 
 class LoginApp extends Component {
+  constructor(props) {
+    super(props);
+    AsyncStorage.getItem('isLogin').then((value) => {
+      if (value === 'true') {
+        Actions.Main({ type: 'reset' });
+      }
+    });
+  }
+  
   render() {
-    console.log(this.props.user.username);
-    if (this.props.user.username) {
-      Actions.Main({ type: 'reset' });
-    }
     return (
       <LoginForm {...this.props} />
     );

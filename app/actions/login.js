@@ -1,4 +1,5 @@
 import { Actions } from 'react-native-router-flux';
+import { AsyncStorage } from 'react-native';
 import API from '../lib/api';
 import {
   LOGIN_USERNAME_CHANGED, LOGIN_PASSWORD_CHANGED, LOGIN_USER, LOGIN_SUCCESS, LOGIN_ERROR
@@ -50,6 +51,13 @@ export const loginUserSuccess = (dispatch, user) => {
     type: LOGIN_SUCCESS,
     payload: user
   });
+  try {
+    AsyncStorage.setItem('isLogin', 'true');
+    console.log('Save login data');
+  } catch (error) {
+    // Error saving data
+    console.log('Error saving data');
+  }
   Actions.Main({ type: 'reset' });
 };
 
