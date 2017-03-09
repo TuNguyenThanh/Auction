@@ -47,6 +47,10 @@ class Home extends Component {
     this.dataSource = ds.cloneWithRows(product);
   }
 
+  openUpProduct() {
+    Actions.upProduct();
+  }
+
   renderRow(item) {
     //console.log(item);
     return (
@@ -95,7 +99,7 @@ class Home extends Component {
             leftHeaderButtonIcon={require('./images/menu.png')}
             rightHeaderButtonIcon={require('./images/edit.png')}
             onItemLeftPress={this.toggleMenu.bind(this)}
-            onItemRightPress={() => alert('add')}
+            onItemRightPress={this.openUpProduct.bind(this)}
           />
           <ListView
             style={{ backgroundColor: '#EBEBEB' }}

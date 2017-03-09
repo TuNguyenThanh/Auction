@@ -8,7 +8,7 @@ class ForgotForm extends Component {
     const a = 1;
     if (a === 1) {
       return (
-        <Button block style={styles.button}>
+        <Button block style={styles.button} onPress={this.onPressForgotPassword.bind(this)}>
           <Text style={{ color: 'white' }}>ĐẶT LẠI MẬT KHẨU</Text>
         </Button>
       );
@@ -18,6 +18,17 @@ class ForgotForm extends Component {
         <Spinner color='white' />
       </Button>
     );
+  }
+
+  onChangedForgotPassword(text) {
+    this.props.changedForgotPassword(text);
+  }
+
+  onPressForgotPassword() {
+    const { email } = this.props;
+    if (email) {
+      this.props.forgotPassword(email);
+    }
   }
 
   render() {
@@ -47,6 +58,8 @@ class ForgotForm extends Component {
                       placeholderTextColor="#989899"
                       autoCapitalize={'none'}
                       autoCorrect={false}
+                      value={this.props.email}
+                      onChangeText={this.onChangedForgotPassword.bind(this)}
                     />
                   </Item>
                 </Form>
@@ -84,7 +97,7 @@ const styles = {
 
   textForm: {
     fontSize: 25,
-    color: '#5B5A5A',
+    color: '#EF5E92',
     marginBottom: 20
   },
 
@@ -93,7 +106,7 @@ const styles = {
   },
 
   button: {
-    backgroundColor: '#129793',
+    backgroundColor: '#EF5E92',
     borderRadius: 20,
     marginTop: 10,
     marginBottom: 20

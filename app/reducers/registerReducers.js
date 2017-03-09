@@ -1,5 +1,5 @@
 import {
-  FIRST_NAME_CHANGED, LAST_NAME_CHANGED, REGISTER_EMAIL_CHANGED,
+  FIRST_NAME_CHANGED, LAST_NAME_CHANGED, REGISTER_EMAIL_CHANGED, REGISTER_PHONE_CHANGED,
   REGISTER_USERNAME_CHANGED, REGISTER_PASSWORD_CHANGED, REGISTER_RE_PASSWORD_CHANGED,
   REGISTER_SUCCESS, REGISTER_ERROR, REGISTER_USER
 } from '../actions/types';
@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   firstname: '',
   lastname: '',
   email: '',
+  phone: '',
   username: '',
   password: '',
   repassword: '',
@@ -24,6 +25,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, lastname: action.payload };
     case REGISTER_EMAIL_CHANGED:
       return { ...state, email: action.payload };
+    case REGISTER_PHONE_CHANGED:
+      return { ...state, phone: action.payload };
     case REGISTER_USERNAME_CHANGED:
       return { ...state, username: action.payload };
     case REGISTER_PASSWORD_CHANGED:
@@ -31,7 +34,7 @@ export default (state = INITIAL_STATE, action) => {
     case REGISTER_RE_PASSWORD_CHANGED:
       return { ...state, repassword: action.payload };
     case REGISTER_SUCCESS:
-      return { ...state, data: action.payload, error: '', loading: false, firstname: '', lastname: '', email: '', username: '', password: '', repassword: '' };
+      return { ...state, data: action.payload, firstname: '', lastname: '', email: '', username: '', password: '', repassword: '', error: '', loading: false };
     case REGISTER_ERROR:
       return { ...state, error: action.payload, loading: false };
     case REGISTER_USER:

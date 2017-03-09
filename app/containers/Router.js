@@ -3,15 +3,16 @@ import { Scene, Router } from 'react-native-router-flux';
 import LoginApp from './LoginApp';
 import RegisterApp from './RegisterApp';
 import HomeApp from './HomeApp';
-import ForgotForm from '../components/ForgotForm';
+import ForgotApp from './ForgotApp';
 import Detail from '../components/Detail';
+import UpProduct from '../components/UpProduct';
 
 const RouterComponent = () => (
   <Router>
     <Scene key="Login" direction="vertical" hideNavBar initial>
       <Scene key="loginForm" component={LoginApp} />
       <Scene key="registerForm" component={RegisterApp} direction="vertical" />
-      <Scene key="forgotForm" component={ForgotForm} />
+      <Scene key="forgotForm" component={ForgotApp} />
     </Scene>
     <Scene key="Main" direction="vertical" >
       <Scene
@@ -27,6 +28,7 @@ const RouterComponent = () => (
         leftButtonIconStyle={{ tintColor: '#EF5E92' }}
         hideNavBar={false}
       />
+      <Scene key="upProduct" component={UpProduct} title="Đăng tin" hideNavBar={false} />
     </Scene>
   </Router>
 );

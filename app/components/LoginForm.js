@@ -149,7 +149,7 @@ const styles = {
 
   textForm: {
     fontSize: 25,
-    color: '#5B5A5A',
+    color: '#EF5E92',
     marginBottom: 20
   },
 
@@ -158,7 +158,7 @@ const styles = {
   },
 
   button: {
-    backgroundColor: '#129793',
+    backgroundColor: '#EF5E92',
     borderRadius: 20,
     marginTop: 10
   },

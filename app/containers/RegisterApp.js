@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  changedFirstName, changedLastName, changedEmail,
+  changedFirstName, changedLastName, changedEmail, changedPhone,
   changedUsername, changedPassword, changedRePassword,
   createAccount
 } from '../actions';
@@ -19,6 +19,7 @@ const mapStateToProps = (state) => {
     firstname: state.Register.firstname,
     lastname: state.Register.lastname,
     email: state.Register.email,
+    phone: state.Register.phone,
     username: state.Register.username,
     password: state.Register.password,
     repassword: state.Register.repassword,
@@ -32,6 +33,7 @@ export default connect(mapStateToProps, {
   changedFirstName,
   changedLastName,
   changedEmail,
+  changedPhone,
   changedUsername,
   changedPassword,
   changedRePassword,

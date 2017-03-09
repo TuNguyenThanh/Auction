@@ -1,7 +1,7 @@
 import { Actions } from 'react-native-router-flux';
 import API from '../lib/api';
 import {
-  FIRST_NAME_CHANGED, LAST_NAME_CHANGED, REGISTER_EMAIL_CHANGED,
+  FIRST_NAME_CHANGED, LAST_NAME_CHANGED, REGISTER_EMAIL_CHANGED, REGISTER_PHONE_CHANGED,
   REGISTER_USERNAME_CHANGED, REGISTER_PASSWORD_CHANGED, REGISTER_RE_PASSWORD_CHANGED,
   REGISTER_SUCCESS, REGISTER_ERROR, REGISTER_USER
 } from './types';
@@ -25,6 +25,13 @@ export const changedLastName = (text) => {
 export const changedEmail = (text) => {
   return {
     type: REGISTER_EMAIL_CHANGED,
+    payload: text
+  };
+};
+
+export const changedPhone = (text) => {
+  return {
+    type: REGISTER_PHONE_CHANGED,
     payload: text
   };
 };

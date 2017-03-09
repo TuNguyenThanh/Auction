@@ -16,9 +16,9 @@ function configureStore(initialState) {
     autoRehydrate(),
   );
   const store = createStore(reducers, initialState, enhancer);
-  persistStore(store, { storage: AsyncStorage }, (text) => {
-    console.log(`text ${text}`);
-  });
+  // persistStore(store, { storage: AsyncStorage }, (text) => {
+  //   console.log(`text ${text}`);
+  // });
   return store;
 }
 

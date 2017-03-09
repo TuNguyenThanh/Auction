@@ -8,6 +8,7 @@ export const LOGIN_USER = 'login_user';
 export const FIRST_NAME_CHANGED = 'first_name_change';
 export const LAST_NAME_CHANGED = 'last_name_change';
 export const REGISTER_EMAIL_CHANGED = 'register_email_change';
+export const REGISTER_PHONE_CHANGED = 'register_phone_change';
 export const REGISTER_USERNAME_CHANGED = 'register_username_change';
 export const REGISTER_PASSWORD_CHANGED = 'register_password_change';
 export const REGISTER_RE_PASSWORD_CHANGED = 'register_re-password_change';
@@ -15,5 +16,9 @@ export const REGISTER_SUCCESS = 'register_success';
 export const REGISTER_ERROR = 'register_error';
 export const REGISTER_USER = 'register_user';
 
+export const FORGOT_LOAD = 'forgot_load';
+export const FORGOT_SUCCESS = 'forgot_success';
+export const FORGOT_ERROR = 'forgot_error';
+export const FORGOT_PASSWORD_CHANGED = 'forgot_password_change';
 
 export const HOME_FETCH_DATA = 'home_fetch_data';

@@ -29,6 +29,10 @@ class LoginForm extends Component {
     this.props.changedEmail(text);
   }
 
+  onChangedPhone(text) {
+    this.props.changedPhone(text);
+  }
+
   onChangedUsername(text) {
     this.props.changedUsername(text);
   }
@@ -114,6 +118,17 @@ class LoginForm extends Component {
                   <Item regular>
                     <Input
                       style={styles.input}
+                      placeholder="Số điện thoại"
+                      placeholderTextColor="#989899"
+                      autoCapitalize={'none'}
+                      autoCorrect={false}
+                      value={this.props.phone}
+                      onChangeText={this.onChangedPhone.bind(this)}
+                    />
+                  </Item>
+                  <Item regular>
+                    <Input
+                      style={styles.input}
                       placeholder="Tên đăng nhập"
                       placeholderTextColor="#989899"
                       autoCapitalize={'none'}
@@ -176,7 +191,7 @@ const styles = {
 
   textForm: {
     fontSize: 25,
-    color: '#5B5A5A',
+    color: '#EF5E92',
     marginBottom: 20
   },
 
@@ -191,7 +206,7 @@ const styles = {
   },
 
   button: {
-    backgroundColor: '#129793',
+    backgroundColor: '#EF5E92',
     borderRadius: 20,
     marginTop: 10,
     marginBottom: 20
