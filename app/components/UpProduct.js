@@ -1,13 +1,35 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, Image } from 'react-native';
+import { View, ScrollView, Text, Image, TouchableOpacity } from 'react-native';
+import DatePicker from 'react-native-datepicker';
 import { Input } from './common';
 
 class UpProduct extends Component {
+  constructor(props) {
+    super(props);
+    const utc = new Date();
+    const dateNow = utc.toJSON().slice(0, 10).replace(/-/g, '-');
+    const timeNow = utc.toLocaleTimeString().replace("/.*(\d{2}:\d{2}:\d{2}).*/", "$1");
+    this.state = {
+      dateNow,
+      timeNow,
+      dateEnd: dateNow,
+      timeEnd: timeNow,
+    };
+  }
+
+  onPressUpProduct() {
+    console.log(this.state.dateNow + ' ' + this.state.timeNow);
+    console.log(this.state.dateEnd + ' ' + this.state.timeEnd);
+  }
+
   render() {
+    let maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 5);
+    maxDate = maxDate.toJSON().slice(0, 10).replace(/-/g, '/');
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Input lable="Tên sản phẩm" />
-        <Input lable="Giá khỏi điểm" />
+        <Input lable="Giá khởi điểm" />
         <Input lable="Giá trần" />
         <Input
           style={{ height: 50, fontSize: 18 }}
@@ -16,58 +38,126 @@ class UpProduct extends Component {
           editable
           numberOfLines={4}
         />
-        <View style={{ height: 40, flexDirection: 'row' }}>
-          <Text>Ngày kết thúc</Text>
-          <Text>2017-03-09 14:20:00</Text>
+        <View style={{ paddingTop: 8 }}>
+          <Text style={{ marginLeft: 8, marginBottom: 8 }}>Ngày bắt đầu</Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <DatePicker
+              date={this.state.dateNow}
+              mode="date"
+              format="YYYY-MM-DD"
+              minDate={this.state.dateNow}
+              maxDate={maxDate}
+              confirmBtnText="Chọn"
+              cancelBtnText="Huỷ"
+              iconSource={require('./images/calendar.png')}
+              customStyles={{
+                dateIcon: {
+                  position: 'absolute',
+                  left: 0,
+                  top: 4,
+                  marginLeft: 0
+                },
+                dateInput: {
+                  marginLeft: 36
+                }
+              }}
+              onDateChange={(dateNow) => this.setState({ dateNow })}
+            />
+            <DatePicker
+              style={{ marginLeft: 8 }}
+              date={this.state.timeNow}
+              mode="time"
+              format="HH:mm"
+              confirmBtnText="Chọn"
+              cancelBtnText="Huỷ"
+              minuteInterval={10}
+              iconSource={require('./images/alarm-clock.png')}
+              customStyles={{
+                dateIcon: {
+                  position: 'absolute',
+                  left: 0,
+                  top: 4,
+                  marginLeft: 0
+                },
+                dateInput: {
+                  marginLeft: 36
+                }
+              }}
+              onDateChange={(timeNow) => this.setState({ timeNow })}
+            />
+          </View>
         </View>
-        <View style={{ height: 180 }}>
+        <View style={{ paddingTop: 8 }}>
+          <Text style={{ marginLeft: 8, marginBottom: 8 }}>Ngày kết thúc</Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <DatePicker
+              date={this.state.dateEnd}
+              mode="date"
+              format="YYYY-MM-DD"
+              minDate={this.state.dateEnd}
+              maxDate={maxDate}
+              confirmBtnText="Chọn"
+              cancelBtnText="Huỷ"
+              iconSource={require('./images/calendar.png')}
+              customStyles={{
+                dateIcon: {
+                  position: 'absolute',
+                  left: 0,
+                  top: 4,
+                  marginLeft: 0
+                },
+                dateInput: {
+                  marginLeft: 36
+                }
+              }}
+              onDateChange={(dateEnd) => this.setState({ dateEnd })}
+            />
+            <DatePicker
+              style={{ marginLeft: 8 }}
+              date={this.state.timeEnd}
+              mode="time"
+              format="HH:mm"
+              confirmBtnText="Chọn"
+              cancelBtnText="Huỷ"
+              minuteInterval={10}
+              iconSource={require('./images/alarm-clock.png')}
+              customStyles={{
+                dateIcon: {
+                  position: 'absolute',
+                  left: 0,
+                  top: 4,
+                  marginLeft: 0
+                },
+                dateInput: {
+                  marginLeft: 36
+                }
+              }}
+              onDateChange={(timeEnd) => this.setState({ timeEnd })}
+            />
+          </View>
+        </View>
+        <View style={{ paddingTop: 8 }}>
           <Text>Chọn hình sản phẩm</Text>
           <Image
             resizeMode="contain"
-            style={{ flex: 1, marginTop: 8 }}
+            style={{ height: 200 , flex: 1 }}
             source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
           />
         </View>
-        <View style={styles.buttonUp}>
+        <TouchableOpacity style={styles.buttonUp} onPress={this.onPressUpProduct.bind(this)}>
           <Text style={styles.buttonTextUp}>Đăng sản phẩm</Text>
-        </View>
+        </TouchableOpacity>
       </ScrollView>
     );
   }
 }
 
-// <Content>
-//     <Form>
-//       <Item>
-//         <Label>Tên sản phẩm</Label>
-//         <Input />
-//       </Item>
-//       <Item>
-//         <Label>Giá khỏi điểm</Label>
-//         <Input />
-//       </Item>
-//       <Item>
-//         <Label>Giá trần</Label>
-//         <Input />
-//       </Item>
-//       <Item >
-//         <Label>Ngày kết thúc</Label>
-//         <View style={{ flex: 1, height: 60, backgroundColor: 'red' }}>
-//         </View>
-//       </Item>
-//       <Item >
-//         <Label>Chọn hình sản phẩm</Label>
-//         <View style={{ flex: 1, height: 60, backgroundColor: 'red' }}>
-//         </View>
-//       </Item>
-//     </Form>
-// </Content>
-
 const styles = {
   container: {
     flex: 1,
     marginTop: 64,
-    padding: 8
+    padding: 8,
+    paddingTop: 0
   },
 
   buttonUp: {
@@ -75,10 +165,9 @@ const styles = {
     height: 40,
     marginTop: 10,
     borderRadius: 20,
-    // marginLeft: 20,
-    // marginRight: 20,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 8
   },
 
   buttonTextUp: {

@@ -1,14 +1,50 @@
 import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
+import SocketIOClient from 'socket.io-client';
 
 class Tab1 extends Component {
+  constructor(props) {
+    super(props);
+    //console.log(this.props.data.id);
+  }
+
+  componentWillMount() {
+    // this.socket = SocketIOClient('http://localhost:3000');
+    // this.socket.emit('CLIENT_SEND_ID', this.props.data.id);
+    // this.state = {
+    //   timeleft: this.props.data.timeleft
+    // };
+  }
+
+  componentDidMount() {
+    // this.socket.on('SERVER_SEND_PRODUCT', function(data) {
+    //   _this.setState({
+    //     timeleft: data
+    //   });
+    // });
+  }
+
+
+  // componentWillUnmount() {
+  //   this.socket.on('SERVER_SEND_PRODUCT', function(data) {
+  //     _this.setState({
+  //       timeleft: data
+  //     });
+  //   });
+  // }
+
   render() {
+    console.log('tab1');
+    console.log(this.props.product);
+
+    const { image, timeleft } = this.props.product;
+
     return (
       <View style={styles.container}>
         <Image
           style={styles.image}
           resizeMode={'contain'}
-          source={{ uri: 'https://cdn.shopify.com/s/files/1/0808/0067/products/ip7_plus_nh_gold_title_02_large.jpg?v=1483565532' }}
+          source={{ uri: image }}
         />
         <View>
           <View style={styles.viewItem}>
@@ -44,7 +80,7 @@ class Tab1 extends Component {
               style={styles.icon}
               source={require('./images/hourglass.png')}
             />
-            <Text style={styles.textTime}>03:15:25</Text>
+            <Text style={styles.textTime}>{timeleft}</Text>
           </View>
           <View style={styles.viewTime}>
             <View style={styles.viewPriceNew}>
@@ -126,7 +162,6 @@ const styles = {
     fontWeight: '800',
     marginLeft: 8
   }
-
 
 };
 

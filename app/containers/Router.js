@@ -4,17 +4,18 @@ import LoginApp from './LoginApp';
 import RegisterApp from './RegisterApp';
 import HomeApp from './HomeApp';
 import ForgotApp from './ForgotApp';
-import Detail from '../components/Detail';
+//import Detail from '../components/Detail';
+import DetailApp from './DetailApp';
 import UpProduct from '../components/UpProduct';
 
 const RouterComponent = () => (
   <Router>
-    <Scene key="Login" direction="vertical" hideNavBar initial>
+    <Scene key="Login" direction="vertical" hideNavBar >
       <Scene key="loginForm" component={LoginApp} />
       <Scene key="registerForm" component={RegisterApp} direction="vertical" />
       <Scene key="forgotForm" component={ForgotApp} />
     </Scene>
-    <Scene key="Main" direction="vertical" >
+    <Scene key="Main" direction="vertical" initial>
       <Scene
         key="homeApp"
         component={HomeApp}
@@ -23,12 +24,19 @@ const RouterComponent = () => (
       <Scene
         key="detail"
         titleStyle={{ color: '#646464' }}
-        component={Detail}
+        component={DetailApp}
         navigationBarStyle={{ borderBottomColor: '#F8F8F8', backgroundColor: '#F8F8F8' }}
         leftButtonIconStyle={{ tintColor: '#EF5E92' }}
         hideNavBar={false}
       />
-      <Scene key="upProduct" component={UpProduct} title="Đăng tin" hideNavBar={false} />
+      <Scene
+        key="upProduct"
+        component={UpProduct}
+        title="Đăng tin"
+        navigationBarStyle={{ borderBottomColor: '#F8F8F8', backgroundColor: '#F8F8F8' }}
+        leftButtonIconStyle={{ tintColor: '#EF5E92' }}
+        hideNavBar={false}
+      />
     </Scene>
   </Router>
 );

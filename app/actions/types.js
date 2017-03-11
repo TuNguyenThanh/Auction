@@ -22,3 +22,5 @@ export const FORGOT_ERROR = 'forgot_error';
 export const FORGOT_PASSWORD_CHANGED = 'forgot_password_change';
 
 export const HOME_FETCH_DATA = 'home_fetch_data';
+
+export const DETAIL_FETCH_PRODUCT_BY_ID = 'detail_fetch_product_by_id';

@@ -10,15 +10,19 @@
     "native-base": "^2.0.11",
     "react": "15.4.2",
     "react-native": "0.42.0",
+    "react-native-datepicker": "^1.4.4",
     "react-native-message-bar": "^1.6.0",
     "react-native-router-flux": "^3.38.0",
     "react-native-scrollable-tab-view": "^0.7.2",
     "react-native-side-menu": "^0.20.1",
+    "react-native-socket.io-client": "^1.4.8",
     "react-redux": "^5.0.3",
     "redux": "^3.6.0",
     "redux-logger": "^2.8.1",
     "redux-persist": "^4.4.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3"
   },
   "devDependencies": {
     "babel-jest": "19.0.0",

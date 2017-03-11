@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   View, Text, ListView, TouchableOpacity, Dimensions, Image, StyleSheet
 } from 'react-native';
+import SocketIOClient from 'socket.io-client';
 import { Actions } from 'react-native-router-flux';
 import SideMenu from 'react-native-side-menu';
 import Menu from './Menu';
@@ -9,9 +10,17 @@ import { Header } from './common';
 
 const { width, height } = Dimensions.get('window');
 
+let _this;
 class Home extends Component {
   constructor(props) {
     super(props);
+    _this = this;
+    // this.socket = SocketIOClient('http://localhost:3000');
+    // this.state = {
+    //   isOpen: false,
+    //   products: null,
+    //   dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
+    // };
     this.state = {
       isOpen: false,
     };
@@ -26,8 +35,17 @@ class Home extends Component {
     this.createDataSource(nextProps);
   }
 
+  // componentWillMount() {
+  //   this.socket.on('SERVER_SEND_HOME', function(data){
+  //     _this.setState({
+  //       products: data,
+  //       dataSource: _this.state.dataSource.cloneWithRows(data),
+  //     });
+  //   });
+  // }
+
   onPressProductRow(item) {
-    Actions.detail({ title: item.ten });
+    Actions.detail({ title: item.name, data: item });
   }
 
   toggleMenu() {
@@ -40,15 +58,16 @@ class Home extends Component {
     this.setState({ isOpen });
   }
 
+  openUpProduct() {
+    Actions.upProduct();
+  }
+
   createDataSource({ product }) {
+    //console.log(product);
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
     this.dataSource = ds.cloneWithRows(product);
-  }
-
-  openUpProduct() {
-    Actions.upProduct();
   }
 
   renderRow(item) {
@@ -57,21 +76,21 @@ class Home extends Component {
       <TouchableOpacity style={styles.row} onPress={this.onPressProductRow.bind(this, item)}>
         <Image
           style={{ flex: 1 }}
-          source={{ uri: 'https://www.imore.com/sites/imore.com/files/styles/larger_wm_blw/public/field/image/2016/11/macbook-pro-2016-coffee-hero.jpg?itok=aqJZaHN_' }}
+          source={{ uri: item.image }}
         />
         <View>
           <Text style={styles.textProduct} numberOfLines={2}>
-            Macbook pro retina 2016 99% i7 512SSD
+            {item.name}
           </Text>
           <View style={styles.viewItem}>
-            <Text style={styles.textPriceNow}>45.000</Text>
+            <Text style={styles.textPriceNow}>{item.price}</Text>
           </View>
           <View style={styles.viewItem}>
             <Image
               style={styles.icon}
               source={require('./images/hourglass.png')}
             />
-            <Text>03:15:25</Text>
+            <Text>{item.timeleft}</Text>
           </View>
           <View style={styles.bid}>
             <Text>50.000 VND</Text>
@@ -85,6 +104,8 @@ class Home extends Component {
   }
 
   render() {
+    // console.log('data');
+    // console.log(this.state.products);
     return (
       <View style={styles.container}>
         <SideMenu
