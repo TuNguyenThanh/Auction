@@ -54,7 +54,7 @@ class LoginForm extends Component {
     if (!this.props.loading) {
       return (
         <Button block style={styles.button} onPress={this.onPressLogin.bind(this)}>
-          <Text style={{ color: 'white' }}>Đăng nhập</Text>
+          <Text style={{ color: 'white' }}>ĐĂNG NHẬP</Text>
         </Button>
       );
     }

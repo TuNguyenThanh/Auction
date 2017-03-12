@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   View, Text, ListView, TouchableOpacity, Dimensions, Image, StyleSheet
 } from 'react-native';
-import SocketIOClient from 'socket.io-client';
 import { Actions } from 'react-native-router-flux';
 import SideMenu from 'react-native-side-menu';
 import Menu from './Menu';
@@ -10,17 +9,9 @@ import { Header } from './common';
 
 const { width, height } = Dimensions.get('window');
 
-let _this;
 class Home extends Component {
   constructor(props) {
     super(props);
-    _this = this;
-    // this.socket = SocketIOClient('http://localhost:3000');
-    // this.state = {
-    //   isOpen: false,
-    //   products: null,
-    //   dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
-    // };
     this.state = {
       isOpen: false,
     };
@@ -35,17 +26,13 @@ class Home extends Component {
     this.createDataSource(nextProps);
   }
 
-  // componentWillMount() {
-  //   this.socket.on('SERVER_SEND_HOME', function(data){
-  //     _this.setState({
-  //       products: data,
-  //       dataSource: _this.state.dataSource.cloneWithRows(data),
-  //     });
-  //   });
-  // }
+  onPressAuction(item) {
+    //this.socket.emit('CLIEN_SEND_PRICE_PRODUCT_BY_ID', item);
+    this.props.auctionProduct(item);
+  }
 
-  onPressProductRow(item) {
-    Actions.detail({ title: item.name, data: item });
+  onPressProductRow(item, rowID) {
+    Actions.detail({ title: item.name, id: rowID });
   }
 
   toggleMenu() {
@@ -70,10 +57,10 @@ class Home extends Component {
     this.dataSource = ds.cloneWithRows(product);
   }
 
-  renderRow(item) {
+  renderRow(item, rowID) {
     //console.log(item);
     return (
-      <TouchableOpacity style={styles.row} onPress={this.onPressProductRow.bind(this, item)}>
+      <TouchableOpacity style={styles.row} onPress={this.onPressProductRow.bind(this, item, rowID)}>
         <Image
           style={{ flex: 1 }}
           source={{ uri: item.image }}
@@ -95,7 +82,10 @@ class Home extends Component {
           <View style={styles.bid}>
             <Text>50.000 VND</Text>
           </View>
-          <TouchableOpacity style={styles.btnAuction}>
+          <TouchableOpacity
+            style={styles.btnAuction}
+            onPress={this.onPressAuction.bind(this, item)}
+          >
             <Text style={styles.textAuction}>Đấu giá</Text>
           </TouchableOpacity>
         </View>
@@ -104,8 +94,6 @@ class Home extends Component {
   }
 
   render() {
-    // console.log('data');
-    // console.log(this.state.products);
     return (
       <View style={styles.container}>
         <SideMenu
@@ -127,7 +115,7 @@ class Home extends Component {
             enableEmptySections
             contentContainerStyle={styles.listView}
             dataSource={this.dataSource}
-            renderRow={this.renderRow.bind(this)}
+            renderRow={(rowData, sectionID, rowID) => this.renderRow(rowData, rowID)}
           />
         </SideMenu>
       </View>

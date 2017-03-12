@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Home from '../components/Home';
 
 import {
-  productFetchData
+  productFetchData, auctionProduct
 } from '../actions';
 
 class HomeApp extends Component {
@@ -20,4 +20,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { productFetchData })(HomeApp);
+export default connect(mapStateToProps, { productFetchData, auctionProduct })(HomeApp);

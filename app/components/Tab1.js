@@ -1,44 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
-import SocketIOClient from 'socket.io-client';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import {
+  auctionProduct
+} from '../actions';
 
 class Tab1 extends Component {
-  constructor(props) {
-    super(props);
-    //console.log(this.props.data.id);
+  onPressAuctionProduct(product) {
+    this.props.auctionProduct(product);
   }
-
-  componentWillMount() {
-    // this.socket = SocketIOClient('http://localhost:3000');
-    // this.socket.emit('CLIENT_SEND_ID', this.props.data.id);
-    // this.state = {
-    //   timeleft: this.props.data.timeleft
-    // };
-  }
-
-  componentDidMount() {
-    // this.socket.on('SERVER_SEND_PRODUCT', function(data) {
-    //   _this.setState({
-    //     timeleft: data
-    //   });
-    // });
-  }
-
-
-  // componentWillUnmount() {
-  //   this.socket.on('SERVER_SEND_PRODUCT', function(data) {
-  //     _this.setState({
-  //       timeleft: data
-  //     });
-  //   });
-  // }
 
   render() {
-    console.log('tab1');
-    console.log(this.props.product);
-
-    const { image, timeleft } = this.props.product;
-
+    const { image, timeleft, postdate, expire, price } = this.props.product;
     return (
       <View style={styles.container}>
         <Image
@@ -62,10 +35,10 @@ class Tab1 extends Component {
             <Text>0903017965</Text>
           </View>
           <View style={styles.viewItem}>
-            <Text>Bắt đầu: 04/03/2017 lúc 12:30</Text>
+            <Text>Bắt đầu: {postdate}</Text>
           </View>
           <View style={styles.viewItem}>
-            <Text>Kết thúc: 05/03/2017 lúc 12:00</Text>
+            <Text>Kết thúc: {expire}</Text>
           </View>
           <View style={styles.viewTime}>
             <Image
@@ -73,7 +46,7 @@ class Tab1 extends Component {
               source={require('./images/customer.png')}
             />
             <Text>Nguyen thanh tu</Text>
-            <Text style={styles.textPriceNow}>40.000 VND</Text>
+            <Text style={styles.textPriceNow}>{price}</Text>
           </View>
           <View style={styles.viewTime}>
             <Image
@@ -87,9 +60,12 @@ class Tab1 extends Component {
               <Text>50.000 VND</Text>
             </View>
           </View>
-          <View style={styles.btnAuction}>
-            <Text style={styles.btnAuctionText}>Đấu giá</Text>
-          </View>
+          <TouchableOpacity
+            style={styles.btnAuction}
+            onPress={this.onPressAuctionProduct.bind(this, this.props.product)}
+          >
+            <Text style={styles.btnAuctionText}>ĐẤU GIÁ</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -165,5 +141,5 @@ const styles = {
 
 };
 
-
-export default Tab1;
+export default connect(null, { auctionProduct } )(Tab1);
+//export default Tab1;

@@ -4,18 +4,17 @@ import LoginApp from './LoginApp';
 import RegisterApp from './RegisterApp';
 import HomeApp from './HomeApp';
 import ForgotApp from './ForgotApp';
-//import Detail from '../components/Detail';
 import DetailApp from './DetailApp';
-import UpProduct from '../components/UpProduct';
+import UpProductApp from './UpProductApp';
 
 const RouterComponent = () => (
   <Router>
-    <Scene key="Login" direction="vertical" hideNavBar >
+    <Scene key="Login" direction="vertical" hideNavBar initial>
       <Scene key="loginForm" component={LoginApp} />
       <Scene key="registerForm" component={RegisterApp} direction="vertical" />
       <Scene key="forgotForm" component={ForgotApp} />
     </Scene>
-    <Scene key="Main" direction="vertical" initial>
+    <Scene key="Main" direction="vertical" >
       <Scene
         key="homeApp"
         component={HomeApp}
@@ -31,7 +30,7 @@ const RouterComponent = () => (
       />
       <Scene
         key="upProduct"
-        component={UpProduct}
+        component={UpProductApp}
         title="Đăng tin"
         navigationBarStyle={{ borderBottomColor: '#F8F8F8', backgroundColor: '#F8F8F8' }}
         leftButtonIconStyle={{ tintColor: '#EF5E92' }}

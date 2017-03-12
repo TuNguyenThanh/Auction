@@ -89,7 +89,7 @@ export const errorRegister = (dispatch, error) => {
 };
 
 export const successRegister = (dispatch, data) => {
-  console.log(data.success);
+  //console.log(data.success);
   MessageBarManager.showAlert({
     title: 'Thông báo',
     message: data.success,

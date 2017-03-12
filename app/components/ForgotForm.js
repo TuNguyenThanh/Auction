@@ -3,10 +3,50 @@ import { StatusBar, Image, View, Text, TouchableOpacity } from 'react-native';
 import { Container, Content, Card, Form, Item, Input, Button, Spinner } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 
+const MessageBarAlert = require('react-native-message-bar').MessageBar;
+const MessageBarManager = require('react-native-message-bar').MessageBarManager;
+
 class ForgotForm extends Component {
+  componentDidMount() {
+    MessageBarManager.registerMessageBar(this.refs.alert);
+  }
+
+  componentWillUnmount() {
+    MessageBarManager.unregisterMessageBar();
+  }
+
+  onChangedForgotPassword(text) {
+    this.props.changedForgotPassword(text);
+  }
+
+  onPressForgotPassword() {
+    const { email } = this.props;
+    if (email) {
+      if (!this.validateEmail(email)) {
+        MessageBarManager.showAlert({
+          title: 'Thông báo',
+          message: 'Địa chỉ email không hợp lệ',
+          alertType: 'error'
+        });
+      } else {
+        this.props.forgotPassword(email);
+      }
+    } else {
+      MessageBarManager.showAlert({
+        title: 'Thông báo',
+        message: 'Bạn chưa điền Email',
+        alertType: 'error'
+      });
+    }
+  }
+
+  validateEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
   renderResetPassword() {
-    const a = 1;
-    if (a === 1) {
+    if (!this.props.loading) {
       return (
         <Button block style={styles.button} onPress={this.onPressForgotPassword.bind(this)}>
           <Text style={{ color: 'white' }}>ĐẶT LẠI MẬT KHẨU</Text>
@@ -18,17 +58,6 @@ class ForgotForm extends Component {
         <Spinner color='white' />
       </Button>
     );
-  }
-
-  onChangedForgotPassword(text) {
-    this.props.changedForgotPassword(text);
-  }
-
-  onPressForgotPassword() {
-    const { email } = this.props;
-    if (email) {
-      this.props.forgotPassword(email);
-    }
   }
 
   render() {
@@ -68,6 +97,7 @@ class ForgotForm extends Component {
             {this.renderResetPassword()}
           </View>
         </Content>
+        <MessageBarAlert ref="alert" />
       </Container>
     );
   }

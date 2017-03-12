@@ -1,25 +1,96 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, Image, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import DatePicker from 'react-native-datepicker';
+import ImagePicker from 'react-native-image-crop-picker';
 import { Input } from './common';
 
 class UpProduct extends Component {
   constructor(props) {
     super(props);
     const utc = new Date();
+    utc.setHours(utc.getHours() + 1);
     const dateNow = utc.toJSON().slice(0, 10).replace(/-/g, '-');
-    const timeNow = utc.toLocaleTimeString().replace("/.*(\d{2}:\d{2}:\d{2}).*/", "$1");
+    const timeNow = utc.toLocaleTimeString('vi', { hour: '2-digit', minute:'2-digit' }).replace("/.*(\d{2}:\d{2}:\d{2}).*/", "$1");
+
+    const d2 = new Date(utc);
+    d2.setHours(utc.getHours() + 3);
+    const timeEnd = d2.toLocaleTimeString('vi', { hour: '2-digit', minute:'2-digit' }).replace("/.*(\d{2}:\d{2}:\d{2}).*/", "$1");
     this.state = {
       dateNow,
       timeNow,
       dateEnd: dateNow,
-      timeEnd: timeNow,
+      timeEnd,
+      image: require('./images/default-thumbnail.jpg'),
     };
   }
 
   onPressUpProduct() {
+    console.log(this.props.productName);
+    console.log(this.props.productStartPrice);
+    console.log(this.props.productCeilPrice);
+    console.log(this.props.productDescription);
     console.log(this.state.dateNow + ' ' + this.state.timeNow);
     console.log(this.state.dateEnd + ' ' + this.state.timeEnd);
+    console.log(this.state.image.uri);
+  }
+
+  onChangedProductName(text) {
+    this.props.changedUpProductName(text);
+  }
+
+  onChangedProductStartPrice(text) {
+    this.props.changedUpProductStartPrice(text);
+  }
+
+  onChangedProductCeilPrice(text) {
+    this.props.changedUpProductCeilPrice(text);
+  }
+
+  onChangedProductDescription(text) {
+    this.props.changedUpProductDescription(text);
+  }
+
+  onPressPhoto() {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+      includeBase64: true,
+      compressImageQuality: 1,
+    }).then(image => {
+      //console.log(image);
+      this.setState({
+        image: { uri: image.path, width: image.width, height: image.height },
+      });
+    }).catch(e => alert(e));
+  }
+
+  onPressCamera() {
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true,
+      includeBase64: true,
+      compressImageQuality: 1,
+    }).then(image => {
+      //console.log(image);
+      this.setState({
+        image: { uri: image.path, width: image.width, height: image.height },
+      });
+    }).catch(e => alert(e));
+  }
+
+  chooseImage() {
+    Alert.alert(
+      'Chọn hình ảnh',
+      'Vui lòng chọn một',
+      [
+        { text: 'Photo', onPress: this.onPressPhoto.bind(this) },
+        { text: 'Camera', onPress: this.onPressCamera.bind(this) },
+        { text: 'Huỷ', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+      ],
+      { cancelable: false }
+    );
   }
 
   render() {
@@ -28,15 +99,29 @@ class UpProduct extends Component {
     maxDate = maxDate.toJSON().slice(0, 10).replace(/-/g, '/');
     return (
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <Input lable="Tên sản phẩm" />
-        <Input lable="Giá khởi điểm" />
-        <Input lable="Giá trần" />
+        <Input
+          lable="Tên sản phẩm"
+          value={this.props.productName}
+          onChangeText={this.onChangedProductName.bind(this)}
+        />
+        <Input
+          lable="Giá khởi điểm"
+          value={this.props.productStartPrice}
+          onChangeText={this.onChangedProductStartPrice.bind(this)}
+        />
+        <Input
+          lable="Giá trần"
+          value={this.props.productCeilPrice}
+          onChangeText={this.onChangedProductCeilPrice.bind(this)}
+        />
         <Input
           style={{ height: 50, fontSize: 18 }}
           lable="Miêu tả sản phẩm"
           multiline
           editable
           numberOfLines={4}
+          value={this.props.productDescription}
+          onChangeText={this.onChangedProductDescription.bind(this)}
         />
         <View style={{ paddingTop: 8 }}>
           <Text style={{ marginLeft: 8, marginBottom: 8 }}>Ngày bắt đầu</Text>
@@ -66,6 +151,8 @@ class UpProduct extends Component {
             <DatePicker
               style={{ marginLeft: 8 }}
               date={this.state.timeNow}
+              minDate={this.state.timeNow}
+              maxDate={this.state.timeEnd}
               mode="time"
               format="HH:mm"
               confirmBtnText="Chọn"
@@ -117,6 +204,7 @@ class UpProduct extends Component {
               date={this.state.timeEnd}
               mode="time"
               format="HH:mm"
+              minDate={this.state.timeEnd}
               confirmBtnText="Chọn"
               cancelBtnText="Huỷ"
               minuteInterval={10}
@@ -138,14 +226,18 @@ class UpProduct extends Component {
         </View>
         <View style={{ paddingTop: 8 }}>
           <Text>Chọn hình sản phẩm</Text>
-          <Image
-            resizeMode="contain"
-            style={{ height: 200 , flex: 1 }}
-            source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
-          />
+          <TouchableOpacity
+            style={styles.viewImageProduct}
+            onPress={this.chooseImage.bind(this)}
+          >
+            <Image
+              style={{ flex: 1 }}
+              source={this.state.image}
+            />
+          </TouchableOpacity>
         </View>
         <TouchableOpacity style={styles.buttonUp} onPress={this.onPressUpProduct.bind(this)}>
-          <Text style={styles.buttonTextUp}>Đăng sản phẩm</Text>
+          <Text style={styles.buttonTextUp}>ĐĂNG SẢN PHẨM</Text>
         </TouchableOpacity>
       </ScrollView>
     );
@@ -172,7 +264,15 @@ const styles = {
 
   buttonTextUp: {
     color: 'white'
-  }
+  },
+
+  viewImageProduct: {
+    marginTop: 8,
+    height: 200,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 };
 
 export default UpProduct;

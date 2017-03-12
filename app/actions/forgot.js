@@ -4,6 +4,7 @@ import {
   FORGOT_LOAD, FORGOT_SUCCESS, FORGOT_ERROR, FORGOT_PASSWORD_CHANGED
 } from './types';
 
+const MessageBarManager = require('react-native-message-bar').MessageBarManager;
 
 export const changedForgotPassword = (text) => {
   console.log(text);
@@ -36,6 +37,11 @@ export const forgotPassword = (email) => {
 
 
 export const forgotUserSuccess = (dispatch, mess) => {
+  MessageBarManager.showAlert({
+    title: 'Thông báo',
+    message: 'Thành công, vui làm kiểm tra email',
+    alertType: 'success'
+  });
   dispatch({
     type: FORGOT_SUCCESS,
     payload: mess

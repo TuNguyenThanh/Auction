@@ -22,5 +22,11 @@ export const FORGOT_ERROR = 'forgot_error';
 export const FORGOT_PASSWORD_CHANGED = 'forgot_password_change';
 
 export const HOME_FETCH_DATA = 'home_fetch_data';
+export const AUCTION_PRODUCT = 'auction_product';
 
 export const DETAIL_FETCH_PRODUCT_BY_ID = 'detail_fetch_product_by_id';
+
+export const UP_PRODUCT_NAME_CHANGED = 'up_product_name_change';
+export const UP_PRODUCT_START_PRICE_CHANGED = 'up_product_start_price_change';
+export const UP_PRODUCT_CEIL_PRICE_CHANGED = 'up_product_ceil_price_change';
+export const UP_PRODUCT_DESCRIPTION_CHANGED = 'up_product_description_change';
