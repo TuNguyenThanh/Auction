@@ -5,7 +5,7 @@ import {
 const INITIAL_STATE = {
   username: '',
   password: '',
-  user: '',
+  token: '',
   error: '',
   loading: false
 };
@@ -17,7 +17,7 @@ export default (state = INITIAL_STATE, action) => {
     case LOGIN_PASSWORD_CHANGED:
       return { ...state, password: action.payload, error: '' };
     case LOGIN_SUCCESS:
-      return { ...state, user: action.payload, username: '', password: '', error: '', loading: false };
+      return { ...state, token: action.payload, username: '', password: '', error: '', loading: false };
     case LOGIN_ERROR:
       return { ...state, error: action.payload, password: '', loading: false };
     case LOGIN_LOAD:

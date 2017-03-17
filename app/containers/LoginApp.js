@@ -16,7 +16,7 @@ class LoginApp extends Component {
       }
     });
   }
-  
+
   render() {
     return (
       <LoginForm {...this.props} />
@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
     password: state.Login.password,
     error: state.Login.error,
     loading: state.Login.loading,
-    user: state.Login.user,
+    token: state.Login.token,
   };
 };
 

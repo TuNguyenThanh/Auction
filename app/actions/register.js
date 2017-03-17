@@ -59,13 +59,30 @@ export const changedRePassword = (text) => {
 
 export const createAccount = (firstname, lastname, email, username, password) => {
   //console.log(firstname, lastname, email, username, password);
+  // return (dispatch) => {
+  //   dispatch({ type: REGISTER_USER });
+  //   const params = { firstname, lastname, email, username, password };
+  //   return API.post('/createUser', params).then(resp => {
+  //     if (resp.error) {
+  //       console.log(resp);
+  //       errorRegister(dispatch, resp.error);
+  //     } else {
+  //       successRegister(dispatch, resp);
+  //     }
+  //   }).catch((error) => {
+  //     console.log(error);
+  //     errorRegister(dispatch, error);
+  //   });
+  // };
+
   return (dispatch) => {
     dispatch({ type: REGISTER_USER });
-    const params = { firstname, lastname, email, username, password };
-    return API.post('/createUser', params).then(resp => {
+    const params = { firstname: 'tu', lastname: 'nguyen', email: 'thanhtu.dev@gmail.com', username:'username', password:'1', phone: '0930103213' };
+    //const params = { code: 'M8B72B', email: 'thanhtu.dev@gmail.com' };
+    return API.post('/register', params).then(resp => {
       if (resp.error) {
         console.log(resp);
-        errorRegister(dispatch, resp.error);
+        //errorRegister(dispatch, resp.error);
       } else {
         successRegister(dispatch, resp);
       }

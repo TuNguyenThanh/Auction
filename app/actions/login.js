@@ -29,10 +29,10 @@ export const login = (username, password) => {
 
     return API.post('/login', params).then(resp => {
       console.log(resp);
-      if (resp.error) {
+      if (resp.success === false) {
         loginUserError(dispatch, resp.error);
       } else {
-        loginUserSuccess(dispatch, resp);
+        loginUserSuccess(dispatch, resp.token);
       }
     }).catch((error) => {
       console.log(error);
@@ -41,7 +41,7 @@ export const login = (username, password) => {
   };
 };
 
-export const loginUserSuccess = (dispatch, user) => {
+export const loginUserSuccess = (dispatch, token) => {
   // MessageBarManager.showAlert({
   //   title: 'Thông báo',
   //   message: 'Đăng nhập thành công',
@@ -49,7 +49,7 @@ export const loginUserSuccess = (dispatch, user) => {
   // });
   dispatch({
     type: LOGIN_SUCCESS,
-    payload: user
+    payload: token
   });
   try {
     AsyncStorage.setItem('isLogin', 'true');

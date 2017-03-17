@@ -18,20 +18,20 @@ export const forgotPassword = (email) => {
   console.log(email);
   return (dispatch) => {
     dispatch({ type: FORGOT_LOAD });
-    //const params = { email };
+    const params = { email };
 
-    return forgotUserSuccess(dispatch, 'thanh cong');
-    // return API.post('/login', params).then(resp => {
-    //   console.log(resp);
-    //   if (resp.error) {
-    //     loginUserError(dispatch, resp.error);
-    //   } else {
-    //     loginUserSuccess(dispatch, resp);
-    //   }
-    // }).catch((error) => {
-    //   console.log(error);
-    //   loginUserError(dispatch, error);
-    // });
+    //return forgotUserSuccess(dispatch, 'thanh cong');
+    return API.post('/forgotPassword', params).then(resp => {
+      console.log(resp);
+      if (resp.success === false) {
+        forgotUserError(dispatch, resp.error);
+      } else {
+        forgotUserSuccess(dispatch, resp.success);
+      }
+    }).catch((error) => {
+      console.log(error);
+      forgotUserError(dispatch, error);
+    });
   };
 };
 
