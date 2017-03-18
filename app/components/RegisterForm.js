@@ -46,9 +46,57 @@ class LoginForm extends Component {
   }
 
   createAccount() {
-    const { firstname, lastname, email, username, password } = this.props;
+    const { firstname, lastname, email, phone, username, password, repassword } = this.props;
+    if (!firstname) {
+      this.message('Ban chưa điền Tên');
+    } else {
+      if (!lastname) {
+        this.message('Bạn chưa điền Họ');
+      } else {
+        if (!email) {
+          this.message('Bạn chưa điền Email');
+        } else {
+          if (!this.validateEmail(email)) {
+            this.message('Địa chỉ email không hợp lệ');
+          } else {
+            if (!phone) {
+              this.message('Bạn chưa điền số điện thoại');
+            } else {
+              if (!username) {
+                this.message('Bạn chưa điền tên đăng nhập');
+              } else {
+                if (!password) {
+                  this.message('Bạn chưa điền mật khẩu');
+                } else {
+                  if (!repassword) {
+                    this.message('Bạn chưa điền nhập lại mật khẩu');
+                  } else {
+                    if (password !== repassword) {
+                      this.message('Mật khẩu và nhập lại phải giống nhau');
+                    } else {
+                      this.props.createAccount(firstname, lastname, email, phone, username, password);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
-    this.props.createAccount(firstname, lastname, email, username, password);
+  message(text) {
+    MessageBarManager.showAlert({
+      title: 'Thông báo',
+      message: text,
+      alertType: 'error'
+    });
+  }
+
+  validateEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
   }
 
   renderButtonRegister() {
@@ -123,6 +171,7 @@ class LoginForm extends Component {
                       autoCapitalize={'none'}
                       autoCorrect={false}
                       value={this.props.phone}
+                      keyboardType={'phone-pad'}
                       onChangeText={this.onChangedPhone.bind(this)}
                     />
                   </Item>

@@ -12,7 +12,8 @@ class DetailApp extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    product: state.Home
+    product: state.Home,
+    token: state.Login.token
   };
 };
 

@@ -19,17 +19,13 @@ export const forgotPassword = (email) => {
   return (dispatch) => {
     dispatch({ type: FORGOT_LOAD });
     const params = { email };
-
-    //return forgotUserSuccess(dispatch, 'thanh cong');
     return API.post('/forgotPassword', params).then(resp => {
-      console.log(resp);
       if (resp.success === false) {
         forgotUserError(dispatch, resp.error);
       } else {
         forgotUserSuccess(dispatch, resp.success);
       }
     }).catch((error) => {
-      console.log(error);
       forgotUserError(dispatch, error);
     });
   };
@@ -46,10 +42,14 @@ export const forgotUserSuccess = (dispatch, mess) => {
     type: FORGOT_SUCCESS,
     payload: mess
   });
-  //Actions.Main({ type: 'reset' });
 };
 
 export const forgotUserError = (dispatch, error) => {
+  MessageBarManager.showAlert({
+    title: 'Thông báo',
+    message: 'Email không tồn tại',
+    alertType: 'error'
+  });
   dispatch({
     type: FORGOT_ERROR,
     payload: error

@@ -7,11 +7,12 @@ import {
 
 class Tab1 extends Component {
   onPressAuctionProduct(product) {
-    this.props.auctionProduct(product);
+    const { token } = this.props;
+    this.props.auctionProduct(token, product);
   }
 
   render() {
-    const { image, timeleft, postdate, expire, price } = this.props.product;
+    const { image, timeleft, startAt, endAt, sellerFirstname, sellerPhone, highestUserName, displayCurrentPrice, displayNextPrice } = this.props.product;
     return (
       <View style={styles.container}>
         <Image
@@ -25,28 +26,28 @@ class Tab1 extends Component {
               style={{ width: 18, height: 18, marginRight: 8 }}
               source={require('./images/user.png')}
             />
-            <Text>Nguyễn Thị Thu Hằng</Text>
+            <Text>{sellerFirstname}</Text>
           </View>
           <View style={styles.viewItem}>
             <Image
               style={{ width: 18, height: 18, marginRight: 8 }}
               source={require('./images/phone-call.png')}
             />
-            <Text>0903017965</Text>
+            <Text>{sellerPhone}</Text>
           </View>
           <View style={styles.viewItem}>
-            <Text>Bắt đầu: {postdate}</Text>
+            <Text>Bắt đầu: {startAt}</Text>
           </View>
           <View style={styles.viewItem}>
-            <Text>Kết thúc: {expire}</Text>
+            <Text>Kết thúc: {endAt}</Text>
           </View>
           <View style={styles.viewTime}>
             <Image
               style={{ width: 18, height: 18, marginRight: 8 }}
               source={require('./images/customer.png')}
             />
-            <Text>Nguyen thanh tu</Text>
-            <Text style={styles.textPriceNow}>{price}</Text>
+            <Text>{highestUserName}</Text>
+            <Text style={styles.textPriceNow}>{displayCurrentPrice}</Text>
           </View>
           <View style={styles.viewTime}>
             <Image
@@ -57,7 +58,7 @@ class Tab1 extends Component {
           </View>
           <View style={styles.viewTime}>
             <View style={styles.viewPriceNew}>
-              <Text>50.000 VND</Text>
+              <Text>{displayNextPrice}</Text>
             </View>
           </View>
           <TouchableOpacity
@@ -141,5 +142,4 @@ const styles = {
 
 };
 
-export default connect(null, { auctionProduct } )(Tab1);
-//export default Tab1;
+export default connect(null, { auctionProduct })(Tab1);

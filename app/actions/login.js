@@ -30,7 +30,7 @@ export const login = (username, password) => {
     return API.post('/login', params).then(resp => {
       console.log(resp);
       if (resp.success === false) {
-        loginUserError(dispatch, resp.error);
+        loginUserError(dispatch, resp.error.id);
       } else {
         loginUserSuccess(dispatch, resp.token);
       }
@@ -42,11 +42,6 @@ export const login = (username, password) => {
 };
 
 export const loginUserSuccess = (dispatch, token) => {
-  // MessageBarManager.showAlert({
-  //   title: 'Thông báo',
-  //   message: 'Đăng nhập thành công',
-  //   alertType: 'success'
-  // });
   dispatch({
     type: LOGIN_SUCCESS,
     payload: token
@@ -62,11 +57,20 @@ export const loginUserSuccess = (dispatch, token) => {
 };
 
 export const loginUserError = (dispatch, error) => {
-  MessageBarManager.showAlert({
-    title: 'Thông báo',
-    message: error,
-    alertType: 'error'
-  });
+  if (error === 81) {
+    MessageBarManager.showAlert({
+      title: 'Thông báo',
+      message: 'Sai tên đăng nhập hoặc mật khẩu',
+      alertType: 'error'
+    });
+  } else {
+    MessageBarManager.showAlert({
+      title: 'Thông báo',
+      message: error,
+      alertType: 'error'
+    });
+  }
+
   dispatch({
     type: LOGIN_ERROR,
     payload: error

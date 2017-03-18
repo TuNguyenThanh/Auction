@@ -5,9 +5,10 @@ import {
 } from './types';
 
 export const productFetchData = () => {
-  this.socket = SocketIOClient('http://192.168.1.151:3000');
+  this.socket = SocketIOClient('http://192.168.1.110:3000');
   return (dispatch) => {
     this.socket.on('SERVER_SEND_HOME', (data) => {
+      //console.log(data);
       dispatch({ type: HOME_FETCH_DATA, payload: data });
     });
   };
@@ -25,8 +26,8 @@ export const productFetchData = () => {
   // };
 };
 
-export const auctionProduct = (product) => {
-  this.socket.emit('CLIEN_SEND_PRICE_PRODUCT_BY_ID', product);
+export const auctionProduct = (token, product) => {
+  this.socket.emit('CLIEN_SEND_BID', { token, productId: product.id });
   return {
     type: AUCTION_PRODUCT
   };

@@ -24,7 +24,7 @@ class Api {
   }
 
   static xhr(route, params, verb) {
-    const host = 'http://192.168.1.151:3000';
+    const host = 'http://192.168.1.110:3000';
     const url = `${host}${route}`;
     console.log(url);
     const options = Object.assign(

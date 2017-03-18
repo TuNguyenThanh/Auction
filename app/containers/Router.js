@@ -6,6 +6,7 @@ import HomeApp from './HomeApp';
 import ForgotApp from './ForgotApp';
 import DetailApp from './DetailApp';
 import UpProductApp from './UpProductApp';
+import CheckCodeApp from './CheckCodeApp';
 
 const RouterComponent = () => (
   <Router>
@@ -13,6 +14,7 @@ const RouterComponent = () => (
       <Scene key="loginForm" component={LoginApp} />
       <Scene key="registerForm" component={RegisterApp} direction="vertical" />
       <Scene key="forgotForm" component={ForgotApp} />
+      <Scene key="checkCode" component={CheckCodeApp} />
     </Scene>
     <Scene key="Main" direction="vertical" >
       <Scene

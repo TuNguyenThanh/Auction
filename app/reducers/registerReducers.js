@@ -34,7 +34,7 @@ export default (state = INITIAL_STATE, action) => {
     case REGISTER_RE_PASSWORD_CHANGED:
       return { ...state, repassword: action.payload };
     case REGISTER_SUCCESS:
-      return { ...state, data: action.payload, firstname: '', lastname: '', email: '', username: '', password: '', repassword: '', error: '', loading: false };
+      return { ...state, data: action.payload, firstname: '', lastname: '', email: '', phone: '', username: '', password: '', repassword: '', error: '', loading: false };
     case REGISTER_ERROR:
       return { ...state, error: action.payload, loading: false };
     case REGISTER_USER:

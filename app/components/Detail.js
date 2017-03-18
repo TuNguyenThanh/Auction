@@ -14,7 +14,7 @@ class Detail extends Component {
         tabBarActiveTextColor={'#EF5E92'}
         tabBarInactiveTextColor={'#646464'}
       >
-        <Tab1 tabLabel="Đấu giá" product={this.props.product[this.props.id]} />
+        <Tab1 tabLabel="Đấu giá" product={this.props.product[this.props.id]} token={this.props.token} />
         <Tab2 tabLabel="Chi tiết" />
       </ScrollableTabView>
     );

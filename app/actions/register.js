@@ -57,34 +57,18 @@ export const changedRePassword = (text) => {
   };
 };
 
-export const createAccount = (firstname, lastname, email, username, password) => {
-  //console.log(firstname, lastname, email, username, password);
-  // return (dispatch) => {
-  //   dispatch({ type: REGISTER_USER });
-  //   const params = { firstname, lastname, email, username, password };
-  //   return API.post('/createUser', params).then(resp => {
-  //     if (resp.error) {
-  //       console.log(resp);
-  //       errorRegister(dispatch, resp.error);
-  //     } else {
-  //       successRegister(dispatch, resp);
-  //     }
-  //   }).catch((error) => {
-  //     console.log(error);
-  //     errorRegister(dispatch, error);
-  //   });
-  // };
-
+export const createAccount = (firstname, lastname, email, phone, username, password) => {
+  //console.log(firstname, lastname, email, phone, username, password);
   return (dispatch) => {
     dispatch({ type: REGISTER_USER });
-    const params = { firstname: 'tu', lastname: 'nguyen', email: 'thanhtu.dev@gmail.com', username:'username', password:'1', phone: '0930103213' };
+    const params = { firstname, lastname, email, phone, username, password };
+    //const params = { firstname: 'tu', lastname: 'nguyen', email: 'thanhtu.dev@gmail.com', username:'username', password:'1', phone: '01207688727' };
     //const params = { code: 'M8B72B', email: 'thanhtu.dev@gmail.com' };
     return API.post('/register', params).then(resp => {
-      if (resp.error) {
-        console.log(resp);
-        //errorRegister(dispatch, resp.error);
+      if (!resp.success) {
+        errorRegister(dispatch, resp.error.id);
       } else {
-        successRegister(dispatch, resp);
+        successRegister(dispatch, email);
       }
     }).catch((error) => {
       console.log(error);
@@ -94,11 +78,35 @@ export const createAccount = (firstname, lastname, email, username, password) =>
 };
 
 export const errorRegister = (dispatch, error) => {
-  MessageBarManager.showAlert({
-    title: 'Thông báo',
-    message: error,
-    alertType: 'warning'
-  });
+  switch (error) {
+    case 97:
+      MessageBarManager.showAlert({
+        title: 'Thông báo',
+        message: 'Tên đăng nhập đã có người đăng ký',
+        alertType: 'warning'
+      });
+      break;
+    case 98:
+      MessageBarManager.showAlert({
+        title: 'Thông báo',
+        message: 'Email đã có người đăng ký',
+        alertType: 'warning'
+      });
+      break;
+    case 99:
+      MessageBarManager.showAlert({
+        title: 'Thông báo',
+        message: 'Số điện thoại đã có người đăng ký',
+        alertType: 'warning'
+      });
+      break;
+    default:
+      MessageBarManager.showAlert({
+        title: 'Thông báo',
+        message: error,
+        alertType: 'warning'
+      });
+  }
   dispatch({
     type: REGISTER_ERROR,
     payload: error
@@ -106,12 +114,7 @@ export const errorRegister = (dispatch, error) => {
 };
 
 export const successRegister = (dispatch, data) => {
-  //console.log(data.success);
-  MessageBarManager.showAlert({
-    title: 'Thông báo',
-    message: data.success,
-    alertType: 'success'
-  });
+  Actions.checkCode({ email: data });
   dispatch({
     type: REGISTER_SUCCESS,
     payload: data

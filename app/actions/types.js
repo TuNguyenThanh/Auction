@@ -30,3 +30,9 @@ export const UP_PRODUCT_NAME_CHANGED = 'up_product_name_change';
 export const UP_PRODUCT_START_PRICE_CHANGED = 'up_product_start_price_change';
 export const UP_PRODUCT_CEIL_PRICE_CHANGED = 'up_product_ceil_price_change';
 export const UP_PRODUCT_DESCRIPTION_CHANGED = 'up_product_description_change';
+
+
+export const CHECK_CODE_CHANGED = 'checkcode_change';
+export const CHECK_CODE_LOAD = 'checkcode_load';
+export const CHECK_CODE_SUCCESS = 'checkcode_success';
+export const CHECK_CODE_ERROR = 'checkcode_error';

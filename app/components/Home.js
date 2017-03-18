@@ -28,7 +28,8 @@ class Home extends Component {
 
   onPressAuction(item) {
     //this.socket.emit('CLIEN_SEND_PRICE_PRODUCT_BY_ID', item);
-    this.props.auctionProduct(item);
+    const { token } = this.props;
+    this.props.auctionProduct(token, item);
   }
 
   onPressProductRow(item, rowID) {
@@ -70,7 +71,7 @@ class Home extends Component {
             {item.name}
           </Text>
           <View style={styles.viewItem}>
-            <Text style={styles.textPriceNow}>{item.price}</Text>
+            <Text style={styles.textPriceNow}>{item.displayCurrentPrice}</Text>
           </View>
           <View style={styles.viewItem}>
             <Image
@@ -80,7 +81,7 @@ class Home extends Component {
             <Text>{item.timeleft}</Text>
           </View>
           <View style={styles.bid}>
-            <Text>50.000 VND</Text>
+            <Text>{item.displayNextPrice}</Text>
           </View>
           <TouchableOpacity
             style={styles.btnAuction}

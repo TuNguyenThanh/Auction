@@ -15,8 +15,10 @@ class HomeApp extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.Login.token);
   return {
-    product: state.Home
+    product: state.Home,
+    token: state.Login.token
   };
 };
 
