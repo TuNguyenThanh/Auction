@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StatusBar, Image, View, Text, TouchableOpacity } from 'react-native';
 import { Container, Content, Card, Form, Item, Input, Button, Spinner } from 'native-base';
 import { Actions } from 'react-native-router-flux';
+import md5 from 'blueimp-md5';
 
 const MessageBarAlert = require('react-native-message-bar').MessageBar;
 const MessageBarManager = require('react-native-message-bar').MessageBarManager;
@@ -68,13 +69,17 @@ class LoginForm extends Component {
                 if (!password) {
                   this.message('Bạn chưa điền mật khẩu');
                 } else {
-                  if (!repassword) {
-                    this.message('Bạn chưa điền nhập lại mật khẩu');
+                  if (password.length < 6) {
+                    this.message('Mật khẩu ít nhất 6 ký tự');
                   } else {
-                    if (password !== repassword) {
-                      this.message('Mật khẩu và nhập lại phải giống nhau');
+                    if (!repassword) {
+                      this.message('Bạn chưa điền nhập lại mật khẩu');
                     } else {
-                      this.props.createAccount(firstname, lastname, email, phone, username, password);
+                      if (password !== repassword) {
+                        this.message('Mật khẩu và nhập lại phải giống nhau');
+                      } else {
+                        this.props.createAccount(firstname, lastname, email, phone, username, md5(password));
+                      }
                     }
                   }
                 }

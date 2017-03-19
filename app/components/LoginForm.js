@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
 import { Container, Content, Card, Form, Item, Input, Button, Spinner } from 'native-base';
 import { Actions } from 'react-native-router-flux';
+import md5 from 'blueimp-md5';
 
 const MessageBarAlert = require('react-native-message-bar').MessageBar;
 const MessageBarManager = require('react-native-message-bar').MessageBarManager;
@@ -20,21 +21,16 @@ class LoginForm extends Component {
   onPressLogin() {
     const { username, password } = this.props;
     if (!username) {
-      MessageBarManager.showAlert({
-        title: 'Thông báo',
-        message: 'Bạn chưa điền tên đăng nhập',
-        alertType: 'error'
-      });
+      this.message('Bạn chưa điền tên đăng nhập');
     } else if (!password) {
-      MessageBarManager.showAlert({
-        title: 'Thông báo',
-        message: 'Bạn chưa điền mật khẩu',
-        alertType: 'error'
-      });
+      this.message('Bạn chưa điền mật khẩu');
     }
-
     if (username && password) {
-      this.props.login(username, password);
+      if (password.length < 6) {
+        this.message('Mật khẩu ít nhất 6 ký tự');
+      } else {
+        this.props.login(username, md5(password));
+      }
     }
   }
 
@@ -48,6 +44,14 @@ class LoginForm extends Component {
 
   onChangedPassword(text) {
     this.props.changedLoginPassword(text);
+  }
+
+  message(text) {
+    MessageBarManager.showAlert({
+      title: 'Thông báo',
+      message: text,
+      alertType: 'error'
+    });
   }
 
   renderButtonLogin() {

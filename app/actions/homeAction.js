@@ -1,11 +1,12 @@
 import SocketIOClient from 'socket.io-client';
+import { DOMAIN_NAME } from '../store/APIConfig';
 import API from '../lib/api';
 import {
   HOME_FETCH_DATA, AUCTION_PRODUCT
 } from './types';
 
 export const productFetchData = () => {
-  this.socket = SocketIOClient('http://192.168.1.110:3000');
+  this.socket = SocketIOClient(DOMAIN_NAME);
   return (dispatch) => {
     this.socket.on('SERVER_SEND_HOME', (data) => {
       //console.log(data);

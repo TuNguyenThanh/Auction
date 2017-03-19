@@ -1,3 +1,5 @@
+import { DOMAIN_NAME } from '../store/APIConfig.js';
+
 class Api {
   static headers() {
     return {
@@ -24,7 +26,7 @@ class Api {
   }
 
   static xhr(route, params, verb) {
-    const host = 'http://192.168.1.110:3000';
+    const host = DOMAIN_NAME;
     const url = `${host}${route}`;
     console.log(url);
     const options = Object.assign(
