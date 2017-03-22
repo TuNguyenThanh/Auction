@@ -47,7 +47,7 @@ export const loginUserSuccess = (dispatch, token) => {
     payload: token
   });
   try {
-    AsyncStorage.setItem('isLogin', 'true');
+    AsyncStorage.setItem('isLogin', token);
     console.log('Save login data');
   } catch (error) {
     // Error saving data

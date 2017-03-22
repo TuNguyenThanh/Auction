@@ -141,7 +141,7 @@ const styles = {
 
   logo: {
     width: 200,
-    height: 50,
+    height: 70,
     marginBottom: 60
   },
 

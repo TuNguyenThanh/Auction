@@ -17,7 +17,7 @@ export default class Menu extends Component {
         { text: 'Đồng ý',
           onPress: () => {
             try {
-              AsyncStorage.setItem('isLogin', 'false');
+              AsyncStorage.setItem('isLogin', '');
               console.log('Save login data');
             } catch (error) {
               // Error saving data
@@ -45,7 +45,7 @@ export default class Menu extends Component {
               style={styles.userIcon}
               source={require('./images/user.png')}
             />
-            <Text style={styles.userText}>Nguyen Thanh Tu</Text>
+            <Text style={styles.userText}>Thanh Tú</Text>
           </TouchableOpacity>
 
           {/*CHOOSE*/}
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   userIcon: {
     width: height / 15,
     height: height / 15,
-    tintColor: colorText,
+    borderRadius: (height / 15) / 2
   },
 
   userText: {

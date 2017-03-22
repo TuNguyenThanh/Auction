@@ -24,7 +24,7 @@ class Tab1 extends Component {
           <View style={styles.viewItem}>
             <Image
               style={{ width: 18, height: 18, marginRight: 8 }}
-              source={require('./images/user.png')}
+              source={require('./images/avatar.png')}
             />
             <Text>{sellerFirstname}</Text>
           </View>

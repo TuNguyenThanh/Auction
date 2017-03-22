@@ -11,8 +11,10 @@ class LoginApp extends Component {
   constructor(props) {
     super(props);
     AsyncStorage.getItem('isLogin').then((value) => {
-      if (value === 'true') {
-        Actions.Main({ type: 'reset' });
+      if (value) {
+        if (value !== '') {
+          Actions.Main({ type: 'reset', tokenLogin: value });
+        }
       }
     });
   }
