@@ -1,7 +1,7 @@
 #  Auction
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 
-* Standard compliant React Native App [React-Native](https://facebook.github.io/react-native/docs/getting-started.html)
+* Standard compliant [React-Native](https://facebook.github.io/react-native/docs/getting-started.html) App 
 
 ## :arrow_up: How to Setup
 
