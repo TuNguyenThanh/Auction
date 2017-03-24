@@ -1,12 +1,24 @@
-# Auction
-[React-Native] Project Aution 
+#  Auction
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 
-Open Terminal
-cd Desktop
-git clone https://github.com/TuNguyenThanh/Auction.git
+* Standard compliant React Native App [React-Native](https://facebook.github.io/react-native/docs/getting-started.html)
 
-cd Auction folder
-npm install
+## :arrow_up: How to Setup
 
-How to run project on simulator?
-https://facebook.github.io/react-native/docs/getting-started.html
+**Step 1:** git clone this repo:
+
+**Step 2:** cd to the cloned repo:
+
+**Step 3:** Install the Application with `npm install`
+
+
+## :arrow_forward: How to Run App
+
+1. cd to the repo
+2. Run Build for either OS
+  * for iOS
+    * run `react-native run-ios`
+  * for Android
+    * Run Genymotion
+    * run `react-native run-android`
+
