@@ -4,6 +4,7 @@ export const LOGIN_SUCCESS = 'login_success';
 export const LOGIN_ERROR = 'login_error';
 export const LOGIN_LOAD = 'login_load';
 export const LOGIN_USER = 'login_user';
+export const LOGIN_ADD_TOKEN = 'login_add_token';
 
 export const FIRST_NAME_CHANGED = 'first_name_change';
 export const LAST_NAME_CHANGED = 'last_name_change';
@@ -30,6 +31,9 @@ export const UP_PRODUCT_NAME_CHANGED = 'up_product_name_change';
 export const UP_PRODUCT_START_PRICE_CHANGED = 'up_product_start_price_change';
 export const UP_PRODUCT_CEIL_PRICE_CHANGED = 'up_product_ceil_price_change';
 export const UP_PRODUCT_DESCRIPTION_CHANGED = 'up_product_description_change';
+export const UP_PRODUCT_LOAD = 'up_product_load';
+export const UP_PRODUCT_LOAD_SUCCESS = 'up_product_load_success';
+export const UP_PRODUCT_LOAD_ERROR = 'up_product_load_error';
 
 
 export const CHECK_CODE_CHANGED = 'checkcode_change';

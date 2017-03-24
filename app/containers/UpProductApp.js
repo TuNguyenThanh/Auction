@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import UpProduct from '../components/UpProduct';
 import {
   changedUpProductName, changedUpProductStartPrice, changedUpProductCeilPrice,
-  changedUpProductDescription
+  changedUpProductDescription, uploadProduct
 } from '../actions';
 
 class UpProductApp extends Component {
@@ -20,6 +20,7 @@ const mapStateToProps = (state) => {
     productStartPrice: state.UpProduct.productStartPrice,
     productCeilPrice: state.UpProduct.productCeilPrice,
     productDescription: state.UpProduct.productDescription,
+    token: state.Login.token
   };
 };
 
@@ -28,4 +29,5 @@ export default connect(mapStateToProps, {
   changedUpProductStartPrice,
   changedUpProductCeilPrice,
   changedUpProductDescription,
+  uploadProduct
 })(UpProductApp);

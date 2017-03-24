@@ -27,7 +27,6 @@ class Home extends Component {
   }
 
   onPressAuction(item) {
-    //this.socket.emit('CLIEN_SEND_PRICE_PRODUCT_BY_ID', item);
     const { token } = this.props;
     this.props.auctionProduct(token, item);
   }
@@ -47,7 +46,9 @@ class Home extends Component {
   }
 
   openUpProduct() {
-    Actions.upProduct();
+    if (this.props.token) {
+      Actions.upProduct({ token: this.props.tokenLogin });
+    }
   }
 
   createDataSource({ product }) {
@@ -200,8 +201,3 @@ const styles = {
 };
 
 export default Home;
-
-// Actions.refresh({
-//   rightTitle: 'Add', onRight: this.toggleMenu.bind(this)
-// });
-//

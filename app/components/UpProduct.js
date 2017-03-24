@@ -1,37 +1,29 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, Image, TouchableOpacity, Alert } from 'react-native';
-import DatePicker from 'react-native-datepicker';
 import ImagePicker from 'react-native-image-crop-picker';
+import { Picker } from 'native-base';
 import { Input } from './common';
 
 class UpProduct extends Component {
   constructor(props) {
     super(props);
-    const utc = new Date();
-    utc.setHours(utc.getHours() + 1);
-    const dateNow = utc.toJSON().slice(0, 10).replace(/-/g, '-');
-    const timeNow = utc.toLocaleTimeString('vi', { hour: '2-digit', minute:'2-digit' }).replace("/.*(\d{2}:\d{2}:\d{2}).*/", "$1");
-
-    const d2 = new Date(utc);
-    d2.setHours(utc.getHours() + 3);
-    const timeEnd = d2.toLocaleTimeString('vi', { hour: '2-digit', minute:'2-digit' }).replace("/.*(\d{2}:\d{2}:\d{2}).*/", "$1");
     this.state = {
-      dateNow,
-      timeNow,
-      dateEnd: dateNow,
-      timeEnd,
       image: require('./images/default-thumbnail.jpg'),
+      selectedHours: '1',
+      selectedMoney: '1000',
     };
   }
 
   onPressUpProduct() {
-    console.log(this.props.productName);
-    console.log(this.props.productStartPrice);
-    console.log(this.props.productCeilPrice);
-    console.log(this.props.productDescription);
-    console.log(this.state.dateNow + ' ' + this.state.timeNow);
-    console.log(this.state.dateEnd + ' ' + this.state.timeEnd);
-    console.log(this.state.image.uri);
+    const bidAmount = 1000; //1k
+    const duration = 2; // 2hour
+    const categoryId = 1;
+    const { productName, productStartPrice, productCeilPrice, productDescription } = this.props;
+    this.props.uploadProduct(
+      this.props.token, this.state.image.uri, productName,
+      productStartPrice, productCeilPrice, productDescription,
+      duration, bidAmount, categoryId
+    );
   }
 
   onChangedProductName(text) {
@@ -39,10 +31,14 @@ class UpProduct extends Component {
   }
 
   onChangedProductStartPrice(text) {
+    text = text.replace(/\./g, '');
+    text = text.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     this.props.changedUpProductStartPrice(text);
   }
 
   onChangedProductCeilPrice(text) {
+    text = text.replace(/\./g, '');
+    text = text.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     this.props.changedUpProductCeilPrice(text);
   }
 
@@ -58,9 +54,10 @@ class UpProduct extends Component {
       includeBase64: true,
       compressImageQuality: 1,
     }).then(image => {
-      //console.log(image);
       this.setState({
         image: { uri: image.path, width: image.width, height: image.height },
+        //image: {uri: `data:${image.mime};base64,`
+        //+ image.data, width: image.width, height: image.height},
       });
     }).catch(e => alert(e));
   }
@@ -73,7 +70,6 @@ class UpProduct extends Component {
       includeBase64: true,
       compressImageQuality: 1,
     }).then(image => {
-      //console.log(image);
       this.setState({
         image: { uri: image.path, width: image.width, height: image.height },
       });
@@ -93,10 +89,19 @@ class UpProduct extends Component {
     );
   }
 
+  handleBidMountValueChange(value) {
+    this.setState({
+      selectedMoney: value
+    });
+  }
+
+  handleHoursValueChange(value) {
+    this.setState({
+      selectedHours: value
+    });
+  }
+
   render() {
-    let maxDate = new Date();
-    maxDate.setDate(maxDate.getDate() + 5);
-    maxDate = maxDate.toJSON().slice(0, 10).replace(/-/g, '/');
     return (
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Input
@@ -106,11 +111,15 @@ class UpProduct extends Component {
         />
         <Input
           lable="Giá khởi điểm"
+          keyboardType={'numeric'}
+          placeholder={'.000 VNĐ'}
           value={this.props.productStartPrice}
           onChangeText={this.onChangedProductStartPrice.bind(this)}
         />
         <Input
           lable="Giá trần"
+          keyboardType={'numeric'}
+          placeholder={'.000 VNĐ'}
           value={this.props.productCeilPrice}
           onChangeText={this.onChangedProductCeilPrice.bind(this)}
         />
@@ -123,107 +132,41 @@ class UpProduct extends Component {
           value={this.props.productDescription}
           onChangeText={this.onChangedProductDescription.bind(this)}
         />
-        <View style={{ paddingTop: 8 }}>
-          <Text style={{ marginLeft: 8, marginBottom: 8 }}>Ngày bắt đầu</Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-            <DatePicker
-              date={this.state.dateNow}
-              mode="date"
-              format="YYYY-MM-DD"
-              minDate={this.state.dateNow}
-              maxDate={maxDate}
-              confirmBtnText="Chọn"
-              cancelBtnText="Huỷ"
-              iconSource={require('./images/calendar.png')}
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  top: 4,
-                  marginLeft: 0
-                },
-                dateInput: {
-                  marginLeft: 36
-                }
-              }}
-              onDateChange={(dateNow) => this.setState({ dateNow })}
-            />
-            <DatePicker
-              style={{ marginLeft: 8 }}
-              date={this.state.timeNow}
-              minDate={this.state.timeNow}
-              maxDate={this.state.timeEnd}
-              mode="time"
-              format="HH:mm"
-              confirmBtnText="Chọn"
-              cancelBtnText="Huỷ"
-              minuteInterval={10}
-              iconSource={require('./images/alarm-clock.png')}
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  top: 4,
-                  marginLeft: 0
-                },
-                dateInput: {
-                  marginLeft: 36
-                }
-              }}
-              onDateChange={(timeNow) => this.setState({ timeNow })}
-            />
-          </View>
+        <View style={{ marginTop: 10, paddingLeft: 8 }}>
+          <Text>Số tiền mỗi lần dự thầu</Text>
         </View>
-        <View style={{ paddingTop: 8 }}>
-          <Text style={{ marginLeft: 8, marginBottom: 8 }}>Ngày kết thúc</Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-            <DatePicker
-              date={this.state.dateEnd}
-              mode="date"
-              format="YYYY-MM-DD"
-              minDate={this.state.dateEnd}
-              maxDate={maxDate}
-              confirmBtnText="Chọn"
-              cancelBtnText="Huỷ"
-              iconSource={require('./images/calendar.png')}
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  top: 4,
-                  marginLeft: 0
-                },
-                dateInput: {
-                  marginLeft: 36
-                }
-              }}
-              onDateChange={(dateEnd) => this.setState({ dateEnd })}
-            />
-            <DatePicker
-              style={{ marginLeft: 8 }}
-              date={this.state.timeEnd}
-              mode="time"
-              format="HH:mm"
-              minDate={this.state.timeEnd}
-              confirmBtnText="Chọn"
-              cancelBtnText="Huỷ"
-              minuteInterval={10}
-              iconSource={require('./images/alarm-clock.png')}
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  top: 4,
-                  marginLeft: 0
-                },
-                dateInput: {
-                  marginLeft: 36
-                }
-              }}
-              onDateChange={(timeEnd) => this.setState({ timeEnd })}
-            />
-          </View>
+        <Picker
+          iosHeader="Chọn giá"
+          mode="dropdown"
+          selectedValue={this.state.selectedMoney}
+          onValueChange={this.handleBidMountValueChange.bind(this)}
+        >
+          <Picker.Item label="1.000 VNĐ" value="1000" />
+          <Picker.Item label="5.000 VNĐ" value="5000" />
+          <Picker.Item label="10.000 VNĐ" value="10000" />
+          <Picker.Item label="50.000 VNĐ" value="50000" />
+          <Picker.Item label="100.000 VNĐ" value="100000" />
+          <Picker.Item label="200.000 VNĐ" value="200000" />
+          <Picker.Item label="300.000 VNĐ" value="300000" />
+          <Picker.Item label="500.000 VNĐ" value="500000" />
+        </Picker>
+        <View style={{ marginTop: 10, paddingLeft: 8 }}>
+          <Text>Thời gian đấu giá</Text>
         </View>
+        <Picker
+          iosHeader="Thời gian"
+          mode="dropdown"
+          selectedValue={this.state.selectedHours}
+          onValueChange={this.handleHoursValueChange.bind(this)}
+        >
+          <Picker.Item label="1 giờ" value="1" />
+          <Picker.Item label="2 giờ" value="2" />
+          <Picker.Item label="5 giờ" value="5" />
+          <Picker.Item label="10 giờ" value="10" />
+          <Picker.Item label="15 giờ" value="15" />
+          <Picker.Item label="24 giờ" value="24" />
+          <Picker.Item label="48 giờ" value="48" />
+        </Picker>
         <View style={{ paddingTop: 8 }}>
           <Text>Chọn hình sản phẩm</Text>
           <TouchableOpacity

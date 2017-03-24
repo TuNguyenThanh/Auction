@@ -2,7 +2,8 @@ import { Actions } from 'react-native-router-flux';
 import { AsyncStorage } from 'react-native';
 import API from '../lib/api';
 import {
-  LOGIN_USERNAME_CHANGED, LOGIN_PASSWORD_CHANGED, LOGIN_USER, LOGIN_SUCCESS, LOGIN_ERROR
+  LOGIN_USERNAME_CHANGED, LOGIN_PASSWORD_CHANGED, LOGIN_USER,
+  LOGIN_SUCCESS, LOGIN_ERROR, LOGIN_ADD_TOKEN
 } from './types';
 
 const MessageBarManager = require('react-native-message-bar').MessageBarManager;
@@ -21,12 +22,37 @@ export const changedLoginPassword = (text) => {
   };
 };
 
+export const addToken = (text) => {
+  return {
+    type: LOGIN_ADD_TOKEN,
+    payload: text
+  };
+};
+
+export const newToken = (token) => {
+  return (dispatch) => {
+    //dispatch({ type: LOGIN_USER });
+    const params = { token };
+    return API.post('/user', params).then(resp => {
+      console.log(resp);
+      if (resp.success === false) {
+        loginUserError(dispatch, resp.error.id);
+      } else {
+        console.log(resp.token);
+        console.log('new token');
+        loginUserSuccess(dispatch, resp.token);
+      }
+    }).catch((error) => {
+      console.log(error);
+      loginUserError(dispatch, error);
+    });
+  };
+};
+
 export const login = (username, password) => {
-  console.log(username, password);
   return (dispatch) => {
     dispatch({ type: LOGIN_USER });
     const params = { username, password };
-
     return API.post('/login', params).then(resp => {
       console.log(resp);
       if (resp.success === false) {

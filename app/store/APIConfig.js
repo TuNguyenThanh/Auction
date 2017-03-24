@@ -1,2 +1,2 @@
 
-export const DOMAIN_NAME = 'http://192.168.1.160:3000';
+export const DOMAIN_NAME = 'http://localhost:3000';

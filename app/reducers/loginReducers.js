@@ -1,5 +1,6 @@
 import {
-  LOGIN_USERNAME_CHANGED, LOGIN_PASSWORD_CHANGED, LOGIN_SUCCESS, LOGIN_ERROR, LOGIN_LOAD
+  LOGIN_USERNAME_CHANGED, LOGIN_PASSWORD_CHANGED, LOGIN_SUCCESS,
+  LOGIN_ERROR, LOGIN_LOAD, LOGIN_ADD_TOKEN
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -22,6 +23,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, error: action.payload, password: '', loading: false };
     case LOGIN_LOAD:
       return { ...state, loading: true };
+    case LOGIN_ADD_TOKEN:
+      return { ...state, token: action.payload };
     default:
       return state;
   }

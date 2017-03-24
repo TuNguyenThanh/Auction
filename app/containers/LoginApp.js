@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import LoginForm from '../components/LoginForm';
 import {
-  changedLoginUsername, changedLoginPassword, login
+  changedLoginUsername, changedLoginPassword, login, addToken, newToken
 } from '../actions';
 
 class LoginApp extends Component {
@@ -13,6 +13,10 @@ class LoginApp extends Component {
     AsyncStorage.getItem('isLogin').then((value) => {
       if (value) {
         if (value !== '') {
+          //this.props.addToken(value);
+          console.log('old token');
+          console.log(value);
+          this.props.newToken(value);
           Actions.Main({ type: 'reset', tokenLogin: value });
         }
       }
@@ -37,5 +41,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  changedLoginUsername, changedLoginPassword, login
+  changedLoginUsername, changedLoginPassword, login, addToken, newToken
 })(LoginApp);

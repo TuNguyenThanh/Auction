@@ -31,6 +31,7 @@ const RouterComponent = () => (
         hideNavBar={false}
       />
       <Scene
+        initial
         key="upProduct"
         component={UpProductApp}
         title="Đăng tin"
@@ -41,12 +42,5 @@ const RouterComponent = () => (
     </Scene>
   </Router>
 );
-
-//initial
-// leftButtonImage={require('../components/images/menu.png')}
-// onLeft={() => alert('left')}
-// rightButtonImage={require('../components/images/edit.png')}
-// onRight={() => alert('left')}
-
 
 export default RouterComponent;

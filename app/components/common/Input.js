@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput } from 'react-native';
 
-const Input = ({ lable, value, onChangeText, placeholder, secureTextEntry, multiline, style, editable, numberOfLines }) => (
+const Input = ({ lable, value, onChangeText, placeholder, secureTextEntry, multiline, style, editable, numberOfLines, keyboardType }) => (
   <View style={styles.container}>
     <Text>{lable}</Text>
     <TextInput
@@ -15,6 +15,7 @@ const Input = ({ lable, value, onChangeText, placeholder, secureTextEntry, multi
       editable={editable}
       numberOfLines={numberOfLines}
       placeholder={placeholder}
+      keyboardType={keyboardType}
     />
   </View>
 );
