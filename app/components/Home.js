@@ -28,30 +28,43 @@ class Home extends Component {
   }
 
   onPressAuction(item) {
-    const { token, id } = this.props;
-    if (item.sellerId != id) {
-      if (item.highestUserId != id) {
-        this.props.auctionProduct(token, item);
-      } else {
-        Alert.alert(
-          'Thông báo',
-          'Bạn đã đấu giá cho sản phẩm này rồi!',
-          [
-            { text: 'Đồng ý', onPress: () => console.log('OK Pressed') }
-          ],
-          { cancelable: false }
-        );
-      }
-    } else {
-      Alert.alert(
-        'Thông báo',
-        'Bạn không thể đấu giá vì bạn là người bán sản phẩm này!',
-        [
-          { text: 'Đồng ý', onPress: () => console.log('OK Pressed') }
-        ],
-        { cancelable: false }
-      );
-    }
+    Alert.alert(
+      'Đấu giá',
+      'Bạn có chắc muốn đấu giá cho sản phẩm này?',
+      [
+        { text: 'Đồng ý',
+          onPress: () => {
+            //Oke Auction
+            const { token, id } = this.props;
+            if (item.sellerId != id) {
+              if (item.highestUserId != id) {
+                this.props.auctionProduct(token, item);
+              } else {
+                Alert.alert(
+                  'Thông báo',
+                  'Bạn đã đấu giá cho sản phẩm này rồi!',
+                  [
+                    { text: 'Đồng ý', onPress: () => console.log('OK Pressed') }
+                  ],
+                  { cancelable: false }
+                );
+              }
+            } else {
+              Alert.alert(
+                'Thông báo',
+                'Bạn không thể đấu giá vì bạn là người bán sản phẩm này!',
+                [
+                  { text: 'Đồng ý', onPress: () => console.log('OK Pressed') }
+                ],
+                { cancelable: false }
+              );
+            }
+          }
+        },
+        { text: 'Để sau', onPress: () => console.log('Cancel Pressed'), style: 'cancel' }
+      ],
+      { cancelable: false }
+    );
   }
 
   onPressProductRow(item, rowID) {
