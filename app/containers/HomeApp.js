@@ -15,10 +15,11 @@ class HomeApp extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.Login.token);
   return {
     product: state.Home,
-    token: state.Login.token
+    token: state.Login.token,
+    id: state.Login.idUser,
+    balance: state.Login.balance
   };
 };
 

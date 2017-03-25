@@ -3,7 +3,8 @@ import { AsyncStorage } from 'react-native';
 import API from '../lib/api';
 import {
   LOGIN_USERNAME_CHANGED, LOGIN_PASSWORD_CHANGED, LOGIN_USER,
-  LOGIN_SUCCESS, LOGIN_ERROR, LOGIN_ADD_TOKEN
+  LOGIN_SUCCESS, LOGIN_ERROR, LOGIN_ADD_TOKEN, LOGIN_ADD_FIRSTNAME,
+  LOGIN_ADD_BALANCE, LOGIN_ADD_ID_USER
 } from './types';
 
 const MessageBarManager = require('react-native-message-bar').MessageBarManager;
@@ -40,7 +41,7 @@ export const newToken = (token) => {
       } else {
         console.log(resp.token);
         console.log('new token');
-        loginUserSuccess(dispatch, resp.token);
+        loginUserSuccess(dispatch, resp);
       }
     }).catch((error) => {
       console.log(error);
@@ -58,7 +59,7 @@ export const login = (username, password) => {
       if (resp.success === false) {
         loginUserError(dispatch, resp.error.id);
       } else {
-        loginUserSuccess(dispatch, resp.token);
+        loginUserSuccess(dispatch, resp);
       }
     }).catch((error) => {
       console.log(error);
@@ -67,13 +68,26 @@ export const login = (username, password) => {
   };
 };
 
-export const loginUserSuccess = (dispatch, token) => {
+export const loginUserSuccess = (dispatch, resp) => {
   dispatch({
     type: LOGIN_SUCCESS,
-    payload: token
+    payload: resp.token
   });
+  dispatch({
+    type: LOGIN_ADD_FIRSTNAME,
+    payload: resp.profile.firstname
+  });
+  dispatch({
+    type: LOGIN_ADD_BALANCE,
+    payload: resp.profile.balance
+  });
+  dispatch({
+    type: LOGIN_ADD_ID_USER,
+    payload: resp.profile.id
+  });
+
   try {
-    AsyncStorage.setItem('isLogin', token);
+    AsyncStorage.setItem('isLogin', resp.token);
     console.log('Save login data');
   } catch (error) {
     // Error saving data

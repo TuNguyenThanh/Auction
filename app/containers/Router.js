@@ -31,7 +31,6 @@ const RouterComponent = () => (
         hideNavBar={false}
       />
       <Scene
-        initial
         key="upProduct"
         component={UpProductApp}
         title="Đăng tin"

@@ -11,19 +11,84 @@ class UpProduct extends Component {
       image: require('./images/default-thumbnail.jpg'),
       selectedHours: '1',
       selectedMoney: '1000',
+      selectedCategory: '1'
     };
   }
 
-  onPressUpProduct() {
-    const bidAmount = 1000; //1k
-    const duration = 2; // 2hour
-    const categoryId = 1;
-    const { productName, productStartPrice, productCeilPrice, productDescription } = this.props;
-    this.props.uploadProduct(
-      this.props.token, this.state.image.uri, productName,
-      productStartPrice, productCeilPrice, productDescription,
-      duration, bidAmount, categoryId
+  alertMessage(mess) {
+    Alert.alert(
+      'Thông báo',
+      mess,
+      [
+        { text: 'Đồng ý', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+      ],
+      { cancelable: false }
     );
+  }
+
+  onPressUpProduct() {
+    const bidAmount = this.state.selectedMoney;//1000; //1k
+    const duration = this.state.selectedHours;//2; // 2hour
+    const categoryId = this.state.selectedCategory;
+    const { productName, productDescription } = this.props;
+    let { productStartPrice, productCeilPrice } = this.props;
+    productStartPrice = productStartPrice.replace(/\./g, '');
+    productCeilPrice = productCeilPrice.replace(/\./g, '');
+
+    if (!productName) {
+      this.alertMessage('Bạn chưa nhập tên sản phẩm');
+    } else {
+      if (!productStartPrice) {
+        this.alertMessage('Bạn chưa nhập giá khởi điểm');
+      } else {
+        if (productStartPrice < 1000) {
+          this.alertMessage('Vui lòng nhập giá > 1.000');
+        } else {
+          if (!productCeilPrice) {
+            this.alertMessage('Bạn chưa nhập giá trần');
+          } else {
+            if (!productDescription) {
+              this.alertMessage('Bạn chưa nhập miêu tả cho sản phẩm');
+            } else {
+              if (this.state.image === require('./images/default-thumbnail.jpg')) {
+                this.alertMessage('Vui lòng chọn hình cho sản phẩm');
+              } else {
+                if (productCeilPrice <= productStartPrice) {
+                  this.alertMessage('Giá khởi điểm phải nhỏ hơn giá trần');
+                } else {
+                  // if (productCeilPrice >= (productStartPrice * 5)) {
+                  //   this.alertMessage('Giá trần phải lớn hơn ít nhất x5 giá khỏi điểm');
+                  // } else {
+                    //Số tiền mỗi lần đấu giá thấp hơn x5 lần đc đấu giá.
+                    if (productCeilPrice / this.state.selectedMoney <= 5) {
+                      this.alertMessage('Số tiền mỗi lần dự thầu phải nhỏ hơn ít nhất x5 giá trần');
+                    } else {
+                      alert('pke ');
+                    }
+                //  }
+
+
+                  // giá khởi điểm lớn hơn giá trần - bidAmount x 2
+                  // if (productStartPrice >= (productCeilPrice - (this.state.selectedMoney * 2))) {
+                  //   this.alertMessage('Giá trần >');
+                  // } else {
+                  //   if (this.state.selectedMoney / 5 > (productCeilPrice -  productStartPrice)) {
+                  //     this.alertMessage('Số tiền mỗi lần dự thầu không hợp lệ');
+                  //   }
+                  //
+                  //   // this.props.uploadProduct(
+                  //   //   this.props.token, this.state.image.uri, productName,
+                  //   //   productStartPrice, productCeilPrice, productDescription,
+                  //   //   duration, bidAmount, categoryId
+                  //   // );
+                  // }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   onChangedProductName(text) {
@@ -101,6 +166,12 @@ class UpProduct extends Component {
     });
   }
 
+  handleCategoryValueChange(value) {
+    this.setState({
+      selectedHours: value
+    });
+  }
+
   render() {
     return (
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -132,6 +203,22 @@ class UpProduct extends Component {
           value={this.props.productDescription}
           onChangeText={this.onChangedProductDescription.bind(this)}
         />
+        <View style={{ marginTop: 10, paddingLeft: 8 }}>
+          <Text>Loại sản phẩm</Text>
+        </View>
+        <Picker
+          iosHeader="Chọn loại sản phẩm"
+          mode="dropdown"
+          selectedValue={this.state.selectedCategory}
+          onValueChange={this.handleCategoryValueChange.bind(this)}
+        >
+          <Picker.Item label="Công nghệ" value="1" />
+          <Picker.Item label="Thời trang" value="2" />
+          <Picker.Item label="Gia dụng" value="3" />
+          <Picker.Item label="Văn phòng phẩm" value="4" />
+          <Picker.Item label="Xe" value="5" />
+        </Picker>
+
         <View style={{ marginTop: 10, paddingLeft: 8 }}>
           <Text>Số tiền mỗi lần dự thầu</Text>
         </View>

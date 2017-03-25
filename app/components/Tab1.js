@@ -1,18 +1,48 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import {
   auctionProduct
 } from '../actions';
 
 class Tab1 extends Component {
+  componentWillMount() {
+    const { isOn } = this.props.product;
+    if (isOn == false) {
+      Actions.main();
+    }
+  }
+
   onPressAuctionProduct(product) {
-    const { token } = this.props;
-    this.props.auctionProduct(token, product);
+    const { token, id } = this.props;
+    if (product.sellerId != id) {
+      if (product.highestUserId != id) {
+        this.props.auctionProduct(token, product);
+      } else {
+        Alert.alert(
+          'Thông báo',
+          'Bạn đã đấu giá cho sản phẩm này rồi!',
+          [
+            { text: 'Đồng ý', onPress: () => console.log('OK Pressed') }
+          ],
+          { cancelable: false }
+        );
+      }
+    } else {
+      Alert.alert(
+        'Thông báo',
+        'Bạn không thể đấu giá vì bạn là người bán sản phẩm này!',
+        [
+          { text: 'Đồng ý', onPress: () => console.log('OK Pressed') }
+        ],
+        { cancelable: false }
+      );
+    }
   }
 
   render() {
-    const { image, timeleft, startAt, endAt, sellerFirstname, sellerPhone, highestUserName, displayCurrentPrice, displayNextPrice } = this.props.product;
+    const { image, timeleft, startAt, endAt, sellerFirstname, sellerPhone, highestUserName, displayCurrentPrice, displayNextPrice, ceilPrice } = this.props.product;
     return (
       <View style={styles.container}>
         <Image
@@ -142,4 +172,11 @@ const styles = {
 
 };
 
-export default connect(null, { auctionProduct })(Tab1);
+const mapStateToProps = (state) => {
+  return {
+    id: state.Login.idUser,
+    balance: state.Login.balance
+  };
+};
+
+export default connect(mapStateToProps, { auctionProduct })(Tab1);

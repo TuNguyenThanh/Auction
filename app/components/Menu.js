@@ -4,11 +4,12 @@ import {
   AsyncStorage, Alert
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 import normalize from '../lib/normalizeText.js';
 
 const { height } = Dimensions.get('window');
 
-export default class Menu extends Component {
+class Menu extends Component {
   onPressLogout() {
     Alert.alert(
       'Đăng xuất',
@@ -32,6 +33,8 @@ export default class Menu extends Component {
   }
 
   render() {
+    let balance = this.props.balance + '';
+    balance = balance.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     return (
       <View style={styles.container}>
         <ScrollView
@@ -45,7 +48,12 @@ export default class Menu extends Component {
               style={styles.userIcon}
               source={require('./images/user.png')}
             />
-            <Text style={styles.userText}>Thanh Tú</Text>
+            <View>
+              <Text style={styles.userText}>{this.props.firstName}</Text>
+              <Text style={styles.moneyTextStyles}>
+                {balance} VNĐ
+              </Text>
+            </View>
           </TouchableOpacity>
 
           {/*CHOOSE*/}
@@ -132,7 +140,6 @@ export default class Menu extends Component {
 
 const colorText = '#EF5E92';
 const colorTextSection = 'gray';
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -215,5 +222,19 @@ const styles = StyleSheet.create({
   menuItemTextCustom: {
     color: colorText,
     marginLeft: 3
+  },
+
+  moneyTextStyles: {
+    marginLeft: 10,
+    color: 'red'
   }
 });
+
+const mapStateToProps = (state) => {
+  return {
+    firstName: state.Login.firstName,
+    balance: state.Login.balance
+  };
+};
+
+export default connect(mapStateToProps)(Menu);

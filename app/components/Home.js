@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View, Text, ListView, TouchableOpacity, Dimensions, Image, StyleSheet
+  View, Text, ListView, TouchableOpacity, Dimensions, Image, StyleSheet, Alert
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import SideMenu from 'react-native-side-menu';
@@ -27,8 +27,30 @@ class Home extends Component {
   }
 
   onPressAuction(item) {
-    const { token } = this.props;
-    this.props.auctionProduct(token, item);
+    const { token, id } = this.props;
+    if (item.sellerId != id) {
+      if (item.highestUserId != id) {
+        this.props.auctionProduct(token, item);
+      } else {
+        Alert.alert(
+          'Thông báo',
+          'Bạn đã đấu giá cho sản phẩm này rồi!',
+          [
+            { text: 'Đồng ý', onPress: () => console.log('OK Pressed') }
+          ],
+          { cancelable: false }
+        );
+      }
+    } else {
+      Alert.alert(
+        'Thông báo',
+        'Bạn không thể đấu giá vì bạn là người bán sản phẩm này!',
+        [
+          { text: 'Đồng ý', onPress: () => console.log('OK Pressed') }
+        ],
+        { cancelable: false }
+      );
+    }
   }
 
   onPressProductRow(item, rowID) {

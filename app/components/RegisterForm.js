@@ -171,7 +171,7 @@ class LoginForm extends Component {
                   <Item regular>
                     <Input
                       style={styles.input}
-                      placeholder="Số điện thoại"
+                      placeholder="Số điện thoại (Xác thực CODE)"
                       placeholderTextColor="#989899"
                       autoCapitalize={'none'}
                       autoCorrect={false}

@@ -5,6 +5,9 @@ export const LOGIN_ERROR = 'login_error';
 export const LOGIN_LOAD = 'login_load';
 export const LOGIN_USER = 'login_user';
 export const LOGIN_ADD_TOKEN = 'login_add_token';
+export const LOGIN_ADD_FIRSTNAME = 'login_add_firstname';
+export const LOGIN_ADD_BALANCE = 'login_add_balance';
+export const LOGIN_ADD_ID_USER = 'login_add_id_user';
 
 export const FIRST_NAME_CHANGED = 'first_name_change';
 export const LAST_NAME_CHANGED = 'last_name_change';
