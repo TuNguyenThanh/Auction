@@ -2,7 +2,7 @@ import { Actions } from 'react-native-router-flux';
 import { AsyncStorage } from 'react-native';
 import API from '../lib/api';
 import {
-  LOGIN_USERNAME_CHANGED, LOGIN_PASSWORD_CHANGED, LOGIN_USER,
+  LOGIN_USERNAME_CHANGED, LOGIN_PASSWORD_CHANGED, LOGIN_LOAD,
   LOGIN_SUCCESS, LOGIN_ERROR, LOGIN_ADD_TOKEN, LOGIN_ADD_FIRSTNAME,
   LOGIN_ADD_BALANCE, LOGIN_ADD_ID_USER
 } from './types';
@@ -52,7 +52,7 @@ export const newToken = (token) => {
 
 export const login = (username, password) => {
   return (dispatch) => {
-    dispatch({ type: LOGIN_USER });
+    dispatch({ type: LOGIN_LOAD });
     const params = { username, password };
     return API.post('/login', params).then(resp => {
       console.log(resp);
