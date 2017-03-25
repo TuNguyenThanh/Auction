@@ -32,6 +32,14 @@ class Menu extends Component {
     );
   }
 
+  handleMenu() {
+    Alert.alert('Coming soon...');
+  }
+
+  handleVersionApp() {
+    Alert.alert('Version', 'Version 1.0 Blue Shark Team');
+  }
+
   render() {
     let balance = this.props.balance + '';
     balance = balance.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -43,7 +51,7 @@ class Menu extends Component {
           showsHorizontalScrollIndicator={false}
         >
           {/*USER*/}
-          <TouchableOpacity style={styles.userView}>
+          <TouchableOpacity style={styles.userView} onPress={this.handleMenu.bind(this)}>
             <Image
               style={styles.userIcon}
               source={require('./images/user.png')}
@@ -62,7 +70,7 @@ class Menu extends Component {
               <Text style={styles.menuSectionText}>NỘI DUNG</Text>
             </View>
             {/*Item - 1*/}
-            <TouchableOpacity style={[styles.menuItem, { marginTop: 8 }]}>
+            <TouchableOpacity style={[styles.menuItem, { marginTop: 8 }]} onPress={this.handleMenu.bind(this)}>
               <Image
                 style={[styles.menuItemImageCustom, { marginLeft: 3 }]}
                 source={require('./images/Starfish_icon.png')}
@@ -70,7 +78,7 @@ class Menu extends Component {
               <Text style={styles.menuItemTextCustom}>Đấu giá của tôi</Text>
             </TouchableOpacity>
             {/*Item - 2*/}
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity style={styles.menuItem} onPress={this.handleMenu.bind(this)}>
               <Image
                 style={[styles.menuItemImageCustom, { marginLeft: 3 }]}
                 source={require('./images/history_icon.png')}
@@ -85,7 +93,7 @@ class Menu extends Component {
               <Text style={styles.menuSectionText}>THÔNG TIN ỨNG DỤNG</Text>
             </View>
             {/*Item - 1*/}
-            <TouchableOpacity style={[styles.menuItem, { marginTop: 8 }]}>
+            <TouchableOpacity style={[styles.menuItem, { marginTop: 8 }]} onPress={this.handleVersionApp.bind(this)}>
               <Image
                 style={styles.menuItemImage}
                 source={require('./images/aboutproduct_icon.png')}
@@ -97,7 +105,7 @@ class Menu extends Component {
               </View>
             </TouchableOpacity>
             {/*Item - 2*/}
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity style={styles.menuItem} onPress={this.handleMenu.bind(this)}>
               <Image
                 style={styles.menuItemImage}
                 source={require('./images/Term_icon.png')}
@@ -105,7 +113,7 @@ class Menu extends Component {
               <Text style={styles.menuItemText}>Điều khoản sử dụng</Text>
             </TouchableOpacity>
             {/*Item - 3*/}
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity style={styles.menuItem} onPress={this.handleMenu.bind(this)}>
               <Image
                 style={styles.menuItemImage}
                 source={require('./images/Ranking_icon.png')}
@@ -113,7 +121,7 @@ class Menu extends Component {
               <Text style={styles.menuItemText}>Bình chọn</Text>
             </TouchableOpacity>
             {/*Item - 4*/}
-            <TouchableOpacity style={[styles.menuItem, { marginLeft: 3, marginRight: 3 }]}>
+            <TouchableOpacity style={[styles.menuItem, { marginLeft: 3, marginRight: 3 }]} onPress={this.handleMenu.bind(this)}>
               <Image
                 style={styles.menuItemImageCustom}
                 source={require('./images/Email_icon.png')}

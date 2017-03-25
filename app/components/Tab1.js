@@ -1,19 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
-import {
-  auctionProduct
-} from '../actions';
+import { auctionProduct } from '../actions';
 
 class Tab1 extends Component {
-  componentWillMount() {
-    const { isOn } = this.props.product;
-    if (isOn == false) {
-      Actions.main();
-    }
-  }
-
   onPressAuctionProduct(product) {
     Alert.alert(
       'Đấu giá',
@@ -66,14 +56,14 @@ class Tab1 extends Component {
         <View>
           <View style={styles.viewItem}>
             <Image
-              style={{ width: 18, height: 18, marginRight: 8 }}
+              style={styles.iconStyles}
               source={require('./images/avatar.png')}
             />
             <Text>{sellerFirstname}</Text>
           </View>
           <View style={styles.viewItem}>
             <Image
-              style={{ width: 18, height: 18, marginRight: 8 }}
+              style={styles.iconStyles}
               source={require('./images/phone-call.png')}
             />
             <Text>{sellerPhone}</Text>
@@ -86,7 +76,7 @@ class Tab1 extends Component {
           </View>
           <View style={styles.viewTime}>
             <Image
-              style={{ width: 18, height: 18, marginRight: 8 }}
+              style={styles.iconStyles}
               source={require('./images/customer.png')}
             />
             <Text>{highestUserName}</Text>
@@ -162,7 +152,14 @@ const styles = {
     width: 25,
     height: 25,
     marginRight: 4,
-    tintColor: 'black'
+    tintColor: '#646464'
+  },
+
+  iconStyles: {
+    width: 18,
+    height: 18,
+    marginRight: 8,
+    tintColor: '#646464'
   },
 
   textTime: {

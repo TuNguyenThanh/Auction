@@ -16,6 +16,7 @@ const Input = ({ lable, value, onChangeText, placeholder, secureTextEntry, multi
       numberOfLines={numberOfLines}
       placeholder={placeholder}
       keyboardType={keyboardType}
+      underlineColorAndroid={'transparent'}
     />
   </View>
 );

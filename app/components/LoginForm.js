@@ -141,8 +141,10 @@ const styles = {
 
   logo: {
     width: 200,
-    height: 70,
-    marginBottom: 60
+    height: 75,
+    marginBottom: 60,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   form: {
@@ -164,7 +166,8 @@ const styles = {
   button: {
     backgroundColor: '#EF5E92',
     borderRadius: 20,
-    marginTop: 10
+    marginTop: 10,
+    marginBottom: 20
   },
 
   title: {

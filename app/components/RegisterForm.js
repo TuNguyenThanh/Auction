@@ -49,7 +49,7 @@ class LoginForm extends Component {
   createAccount() {
     const { firstname, lastname, email, phone, username, password, repassword } = this.props;
     if (!firstname) {
-      this.message('Ban chưa điền Tên');
+      this.message('Bạn chưa điền Tên');
     } else {
       if (!lastname) {
         this.message('Bạn chưa điền Họ');
@@ -270,7 +270,9 @@ const styles = {
     width: 26,
     height: 26,
     marginTop: 20,
-    marginLeft: 10
+    marginLeft: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 };
 

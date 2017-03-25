@@ -99,6 +99,7 @@ class Home extends Component {
       <TouchableOpacity style={styles.row} onPress={this.onPressProductRow.bind(this, item, rowID)}>
         <Image
           style={{ flex: 1 }}
+          resizeMode={'contain'}
           source={{ uri: item.image }}
         />
         <View>

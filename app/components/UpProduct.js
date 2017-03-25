@@ -15,16 +15,6 @@ class UpProduct extends Component {
     };
   }
 
-  countCharSpace(text) {
-    let count = 0;
-    for (let i = 0; i < text.length; i++) {
-      if (text[i] === ' ') {
-        ++count;
-      }
-    }
-    return count;
-  }
-
   onPressUpProduct() {
     const bidAmount = this.state.selectedMoney;//1000; //1k
     const duration = this.state.selectedHours;//2; // 2hour
@@ -73,11 +63,11 @@ class UpProduct extends Component {
                           } else {
                             alert('oke');
                             // oke, upload product
-                            // this.props.uploadProduct(
-                            //   this.props.token, this.state.image.uri, productName,
-                            //   productStartPrice, productCeilPrice, productDescription,
-                            //   duration, bidAmount, categoryId
-                            // );
+                            this.props.uploadProduct(
+                              this.props.token, this.state.image.uri, productName,
+                              productStartPrice, productCeilPrice, productDescription,
+                              duration, bidAmount, categoryId
+                            );
                           }
                         }
                       }
@@ -125,7 +115,7 @@ class UpProduct extends Component {
         //image: {uri: `data:${image.mime};base64,`
         //+ image.data, width: image.width, height: image.height},
       });
-    }).catch(e => alert(e));
+    }).catch(e => Alert.alert(e));
   }
 
   onPressCamera() {
@@ -139,7 +129,7 @@ class UpProduct extends Component {
       this.setState({
         image: { uri: image.path, width: image.width, height: image.height },
       });
-    }).catch(e => alert(e));
+    }).catch(e => Alert.alert(e));
   }
 
   chooseImage() {
@@ -153,6 +143,16 @@ class UpProduct extends Component {
       ],
       { cancelable: false }
     );
+  }
+
+  countCharSpace(text) {
+    let count = 0;
+    for (let i = 0; i < text.length; i++) {
+      if (text[i] === ' ') {
+        ++count;
+      }
+    }
+    return count;
   }
 
   alertMessage(mess) {
