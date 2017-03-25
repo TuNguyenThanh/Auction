@@ -15,15 +15,14 @@ class UpProduct extends Component {
     };
   }
 
-  alertMessage(mess) {
-    Alert.alert(
-      'Thông báo',
-      mess,
-      [
-        { text: 'Đồng ý', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-      ],
-      { cancelable: false }
-    );
+  countCharSpace(text) {
+    let count = 0;
+    for (let i = 0; i < text.length; i++) {
+      if (text[i] === ' ') {
+        ++count;
+      }
+    }
+    return count;
   }
 
   onPressUpProduct() {
@@ -38,34 +37,51 @@ class UpProduct extends Component {
     if (!productName) {
       this.alertMessage('Bạn chưa nhập tên sản phẩm');
     } else {
-      if (!productStartPrice) {
-        this.alertMessage('Bạn chưa nhập giá khởi điểm');
+      if (productName.length <= 12) {
+        this.alertMessage('Vui lòng nhập Tên sản phẩm trên 12 ký tự');
       } else {
-        if (productStartPrice < 1000) {
-          this.alertMessage('Vui lòng nhập giá > 1.000');
+        if (this.countCharSpace(productName) < 2) {
+          this.alertMessage('Vui lòng nhập Tên sản phẩm có nghĩa');
         } else {
-          if (!productCeilPrice) {
-            this.alertMessage('Bạn chưa nhập giá trần');
+          if (!productStartPrice) {
+            this.alertMessage('Bạn chưa nhập giá khởi điểm');
           } else {
-            if (!productDescription) {
-              this.alertMessage('Bạn chưa nhập miêu tả cho sản phẩm');
+            if (productStartPrice < 1000) {
+              this.alertMessage('Vui lòng nhập giá > 1.000');
             } else {
-              if (this.state.image === require('./images/default-thumbnail.jpg')) {
-                this.alertMessage('Vui lòng chọn hình cho sản phẩm');
+              if (!productCeilPrice) {
+                this.alertMessage('Bạn chưa nhập giá trần');
               } else {
-                if (productCeilPrice <= productStartPrice) {
-                  this.alertMessage('Giá trần phải lớn hơn giá khởi điểm');
+                if (!productDescription) {
+                  this.alertMessage('Bạn chưa nhập miêu tả cho sản phẩm');
                 } else {
-                  const temp = (productCeilPrice - productStartPrice) / this.state.selectedMoney;
-                  if (temp < 5) {
-                    this.alertMessage('Số tiền mỗi lần dự thầu phải nhỏ hơn ít nhất x5 giá trần');
+                  if (productDescription.length <= 20) {
+                    this.alertMessage('Vui lòng nhập Miêu tả sản phẩm trên 20 ký tự');
                   } else {
-                    // oke, upload product
-                    // this.props.uploadProduct(
-                    //   this.props.token, this.state.image.uri, productName,
-                    //   productStartPrice, productCeilPrice, productDescription,
-                    //   duration, bidAmount, categoryId
-                    // );
+                    if (this.countCharSpace(productDescription) < 5) {
+                      this.alertMessage('Vui lòng nhập Miêu tả sản phẩm xúc tích');
+                    } else {
+                      if (this.state.image === require('./images/default-thumbnail.jpg')) {
+                        this.alertMessage('Vui lòng chọn hình cho sản phẩm');
+                      } else {
+                        if (productCeilPrice <= productStartPrice) {
+                          this.alertMessage('Giá trần phải lớn hơn giá khởi điểm');
+                        } else {
+                          const temp = (productCeilPrice - productStartPrice) / this.state.selectedMoney;
+                          if (temp < 5) {
+                            this.alertMessage('Số tiền mỗi lần dự thầu phải nhỏ hơn ít nhất x5 giá trần');
+                          } else {
+                            alert('oke');
+                            // oke, upload product
+                            // this.props.uploadProduct(
+                            //   this.props.token, this.state.image.uri, productName,
+                            //   productStartPrice, productCeilPrice, productDescription,
+                            //   duration, bidAmount, categoryId
+                            // );
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -134,6 +150,17 @@ class UpProduct extends Component {
         { text: 'Photo', onPress: this.onPressPhoto.bind(this) },
         { text: 'Camera', onPress: this.onPressCamera.bind(this) },
         { text: 'Huỷ', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+      ],
+      { cancelable: false }
+    );
+  }
+
+  alertMessage(mess) {
+    Alert.alert(
+      'Thông báo',
+      mess,
+      [
+        { text: 'Đồng ý', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
       ],
       { cancelable: false }
     );
