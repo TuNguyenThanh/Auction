@@ -16,7 +16,9 @@ class HomeApp extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    product: state.Home,
+    product: state.Home.data,
+    loading: state.Home.loading,
+    error: state.Home.error,
     token: state.Login.token,
     id: state.Login.idUser,
     balance: state.Login.balance

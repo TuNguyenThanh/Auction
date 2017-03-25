@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   View, Text, ListView, TouchableOpacity, Dimensions, Image, StyleSheet, Alert
 } from 'react-native';
+import { Spinner } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import SideMenu from 'react-native-side-menu';
 import Menu from './Menu';
@@ -74,7 +75,6 @@ class Home extends Component {
   }
 
   createDataSource({ product }) {
-    //console.log(product);
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
@@ -82,7 +82,6 @@ class Home extends Component {
   }
 
   renderRow(item, rowID) {
-    //console.log(item);
     return (
       <TouchableOpacity style={styles.row} onPress={this.onPressProductRow.bind(this, item, rowID)}>
         <Image
@@ -118,6 +117,7 @@ class Home extends Component {
   }
 
   render() {
+    const fetching = this.props.loading;
     return (
       <View style={styles.container}>
         <SideMenu
@@ -134,13 +134,22 @@ class Home extends Component {
             onItemLeftPress={this.toggleMenu.bind(this)}
             onItemRightPress={this.openUpProduct.bind(this)}
           />
-          <ListView
-            style={{ backgroundColor: '#EBEBEB' }}
-            enableEmptySections
-            contentContainerStyle={styles.listView}
-            dataSource={this.dataSource}
-            renderRow={(rowData, sectionID, rowID) => this.renderRow(rowData, rowID)}
-          />
+          {
+            fetching
+            ?
+            <View style={styles.bodyStyles}>
+              <Spinner color='#646464' />
+              <Text style={styles.textLoadStyles}>Đang tải dữ liệu</Text>
+            </View>
+            :
+            <ListView
+              style={{ backgroundColor: '#EBEBEB' }}
+              enableEmptySections
+              contentContainerStyle={styles.listView}
+              dataSource={this.dataSource}
+              renderRow={(rowData, sectionID, rowID) => this.renderRow(rowData, rowID)}
+            />
+          }
         </SideMenu>
       </View>
     );
@@ -219,6 +228,18 @@ const styles = {
 
   textAuction: {
     color: 'white'
+  },
+
+  bodyStyles: {
+    flex: 1,
+    backgroundColor: '#EBEBEB',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  textLoadStyles: {
+    marginTop: -20,
+    color: '#646464'
   }
 };
 

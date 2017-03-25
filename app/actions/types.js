@@ -26,6 +26,8 @@ export const FORGOT_ERROR = 'forgot_error';
 export const FORGOT_PASSWORD_CHANGED = 'forgot_password_change';
 
 export const HOME_FETCH_DATA = 'home_fetch_data';
+export const HOME_FETCH_DATA_SUCCESS = 'home_fetch_data_success';
+export const HOME_FETCH_DATA_ERROR = 'home_fetch_data_error';
 export const AUCTION_PRODUCT = 'auction_product';
 
 export const DETAIL_FETCH_PRODUCT_BY_ID = 'detail_fetch_product_by_id';
