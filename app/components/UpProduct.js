@@ -54,34 +54,19 @@ class UpProduct extends Component {
                 this.alertMessage('Vui lòng chọn hình cho sản phẩm');
               } else {
                 if (productCeilPrice <= productStartPrice) {
-                  this.alertMessage('Giá khởi điểm phải nhỏ hơn giá trần');
+                  this.alertMessage('Giá trần phải lớn hơn giá khởi điểm');
                 } else {
-                  // if (productCeilPrice >= (productStartPrice * 5)) {
-                  //   this.alertMessage('Giá trần phải lớn hơn ít nhất x5 giá khỏi điểm');
-                  // } else {
-                    //Số tiền mỗi lần đấu giá thấp hơn x5 lần đc đấu giá.
-                    if (productCeilPrice / this.state.selectedMoney <= 5) {
-                      this.alertMessage('Số tiền mỗi lần dự thầu phải nhỏ hơn ít nhất x5 giá trần');
-                    } else {
-                      alert('pke ');
-                    }
-                //  }
-
-
-                  // giá khởi điểm lớn hơn giá trần - bidAmount x 2
-                  // if (productStartPrice >= (productCeilPrice - (this.state.selectedMoney * 2))) {
-                  //   this.alertMessage('Giá trần >');
-                  // } else {
-                  //   if (this.state.selectedMoney / 5 > (productCeilPrice -  productStartPrice)) {
-                  //     this.alertMessage('Số tiền mỗi lần dự thầu không hợp lệ');
-                  //   }
-                  //
-                  //   // this.props.uploadProduct(
-                  //   //   this.props.token, this.state.image.uri, productName,
-                  //   //   productStartPrice, productCeilPrice, productDescription,
-                  //   //   duration, bidAmount, categoryId
-                  //   // );
-                  // }
+                  const temp = (productCeilPrice - productStartPrice) / this.state.selectedMoney;
+                  if (temp < 5) {
+                    this.alertMessage('Số tiền mỗi lần dự thầu phải nhỏ hơn ít nhất x5 giá trần');
+                  } else {
+                    // oke, upload product
+                    // this.props.uploadProduct(
+                    //   this.props.token, this.state.image.uri, productName,
+                    //   productStartPrice, productCeilPrice, productDescription,
+                    //   duration, bidAmount, categoryId
+                    // );
+                  }
                 }
               }
             }
@@ -168,7 +153,7 @@ class UpProduct extends Component {
 
   handleCategoryValueChange(value) {
     this.setState({
-      selectedHours: value
+      selectedCategory: value
     });
   }
 
