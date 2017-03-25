@@ -34,6 +34,7 @@ const RouterComponent = () => (
         key="upProduct"
         component={UpProductApp}
         title="Đăng tin"
+        titleStyle={{ color: '#EF5E92', fontWeight: 'bold' }}
         navigationBarStyle={{ borderBottomColor: '#F8F8F8', backgroundColor: '#F8F8F8' }}
         leftButtonIconStyle={{ tintColor: '#EF5E92' }}
         hideNavBar={false}

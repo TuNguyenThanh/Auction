@@ -126,7 +126,7 @@ class Home extends Component {
           menu={<Menu navigator={navigator} />}
         >
           <Header
-            title={'Auction'}
+            title={'VBid'}
             titleColor={'#646464'}
             bgColor={'#F8F8F8'}
             leftHeaderButtonIcon={require('./images/menu.png')}
