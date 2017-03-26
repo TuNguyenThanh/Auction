@@ -24,6 +24,10 @@ class Home extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { error, loading } = nextProps;
+    if (!loading && error != '') {
+      alert('not connect');
+    }
     this.createDataSource(nextProps);
   }
 
@@ -132,6 +136,7 @@ class Home extends Component {
 
   render() {
     const fetching = this.props.loading;
+    const error = this.props.error;
     return (
       <View style={styles.container}>
         <SideMenu

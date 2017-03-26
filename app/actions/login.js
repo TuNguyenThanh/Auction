@@ -1,5 +1,5 @@
 import { Actions } from 'react-native-router-flux';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Alert } from 'react-native';
 import API from '../lib/api';
 import {
   LOGIN_USERNAME_CHANGED, LOGIN_PASSWORD_CHANGED, LOGIN_LOAD,
@@ -32,20 +32,26 @@ export const addToken = (text) => {
 
 export const newToken = (token) => {
   return (dispatch) => {
-    //dispatch({ type: LOGIN_USER });
     const params = { token };
     return API.post('/user', params).then(resp => {
       console.log(resp);
       if (resp.success === false) {
         loginUserError(dispatch, resp.error.id);
       } else {
-        console.log(resp.token);
-        console.log('new token');
+        // console.log(resp.token);
+        // console.log('new token');
         loginUserSuccess(dispatch, resp);
       }
     }).catch((error) => {
-      console.log(error);
-      loginUserError(dispatch, error);
+      console.log(error.message);
+      Alert.alert(
+        'Thông báo',
+        'Vui lòng kiểm tra tình trạng mạng',
+        [
+          { text: 'Đồng ý', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        ],
+        { cancelable: false }
+      );
     });
   };
 };
@@ -55,15 +61,14 @@ export const login = (username, password) => {
     dispatch({ type: LOGIN_LOAD });
     const params = { username, password };
     return API.post('/login', params).then(resp => {
-      console.log(resp);
+      //console.log(resp);
       if (resp.success === false) {
         loginUserError(dispatch, resp.error.id);
       } else {
         loginUserSuccess(dispatch, resp);
       }
     }).catch((error) => {
-      console.log(error);
-      loginUserError(dispatch, error);
+      loginUserError(dispatch, error.message);
     });
   };
 };
@@ -88,7 +93,7 @@ export const loginUserSuccess = (dispatch, resp) => {
 
   try {
     AsyncStorage.setItem('isLogin', resp.token);
-    console.log('Save login data');
+    //console.log('Save login data');
   } catch (error) {
     // Error saving data
     console.log('Error saving data');

@@ -13,7 +13,7 @@ export default (state = INITIAL_STATE, action) => {
     case HOME_FETCH_DATA:
       return { ...state, loading: true };
     case HOME_FETCH_DATA_ERROR:
-      return { ...state, error: action.payload, password: '', loading: false };
+      return { ...state, error: action.payload, loading: false };
     case HOME_FETCH_DATA_SUCCESS:
       return { ...state, data: action.payload, loading: false, error: '' };
     default:

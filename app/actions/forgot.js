@@ -26,7 +26,7 @@ export const forgotPassword = (email) => {
         forgotUserSuccess(dispatch, resp.success);
       }
     }).catch((error) => {
-      forgotUserError(dispatch, error);
+      forgotUserError(dispatch, error.message);
     });
   };
 };

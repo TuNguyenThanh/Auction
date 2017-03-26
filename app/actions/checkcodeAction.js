@@ -14,7 +14,7 @@ export const changedCode = (text) => {
 };
 
 export const checkCode = (code, email) => {
-  console.log(code, email);
+  //console.log(code, email);
   return (dispatch) => {
     dispatch({ type: CHECK_CODE_LOAD });
     const params = { code, email };
@@ -25,7 +25,7 @@ export const checkCode = (code, email) => {
         checkCodeSuccess(dispatch, resp.success);
       }
     }).catch((error) => {
-      checkCodeError(dispatch, error);
+      checkCodeError(dispatch, error.message);
     });
   };
 };

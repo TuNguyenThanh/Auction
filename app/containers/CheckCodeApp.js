@@ -14,6 +14,7 @@ class CheckCodeApp extends Component {
 const mapStateToProps = (state) => {
   return {
     code: state.Code.code,
+    loading: state.Code.loading
   };
 };
 

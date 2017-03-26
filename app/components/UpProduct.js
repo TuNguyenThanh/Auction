@@ -54,19 +54,30 @@ class UpProduct extends Component {
                       if (this.state.image === require('./images/default-thumbnail.jpg')) {
                         this.alertMessage('Vui lòng chọn hình cho sản phẩm');
                       } else {
-                        if (productCeilPrice <= productStartPrice) {
+                        if (parseInt(productCeilPrice) <= parseInt(productStartPrice)) {
                           this.alertMessage('Giá trần phải lớn hơn giá khởi điểm');
                         } else {
-                          const temp = (productCeilPrice - productStartPrice) / this.state.selectedMoney;
+                          const temp = (parseInt(productCeilPrice) - parseInt(productStartPrice)) / parseInt(this.state.selectedMoney);
                           if (temp < 5) {
                             this.alertMessage('Số tiền mỗi lần dự thầu phải nhỏ hơn ít nhất x5 giá trần');
                           } else {
-                            alert('oke');
-                            // oke, upload product
-                            this.props.uploadProduct(
-                              this.props.token, this.state.image.uri, productName,
-                              productStartPrice, productCeilPrice, productDescription,
-                              duration, bidAmount, categoryId
+                            Alert.alert(
+                              'Đăng sản phẩm',
+                              'Bạn có chắc muốn đăng đấu giá cho sản phẩm này?',
+                              [
+                                { text: 'Đồng ý',
+                                  onPress: () => {
+                                    // oke, upload product
+                                    this.props.uploadProduct(
+                                      this.props.token, this.state.image.uri, productName,
+                                      productStartPrice, productCeilPrice, productDescription,
+                                      duration, bidAmount, categoryId
+                                    );
+                                  }
+                                },
+                                { text: 'Để sau', onPress: () => console.log('Cancel Pressed'), style: 'cancel' }
+                              ],
+                              { cancelable: false }
                             );
                           }
                         }

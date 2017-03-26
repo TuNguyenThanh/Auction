@@ -58,12 +58,9 @@ export const changedRePassword = (text) => {
 };
 
 export const createAccount = (firstname, lastname, email, phone, username, password) => {
-  //console.log(firstname, lastname, email, phone, username, password);
   return (dispatch) => {
     dispatch({ type: REGISTER_USER });
     const params = { firstname, lastname, email, phone, username, password };
-    //const params = { firstname: 'tu', lastname: 'nguyen', email: 'thanhtu.dev@gmail.com', username:'username', password:'1', phone: '01207688727' };
-    //const params = { code: 'M8B72B', email: 'thanhtu.dev@gmail.com' };
     return API.post('/register', params).then(resp => {
       if (!resp.success) {
         errorRegister(dispatch, resp.error.id);
@@ -71,8 +68,7 @@ export const createAccount = (firstname, lastname, email, phone, username, passw
         successRegister(dispatch, email);
       }
     }).catch((error) => {
-      console.log(error);
-      errorRegister(dispatch, error);
+      errorRegister(dispatch, error.message);
     });
   };
 };

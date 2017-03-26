@@ -13,9 +13,6 @@ class LoginApp extends Component {
     AsyncStorage.getItem('isLogin').then((value) => {
       if (value) {
         if (value !== '') {
-          //this.props.addToken(value);
-          console.log('old token');
-          console.log(value);
           this.props.newToken(value);
           Actions.Main({ type: 'reset', tokenLogin: value });
         }

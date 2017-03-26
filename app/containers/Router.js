@@ -10,7 +10,7 @@ import CheckCodeApp from './CheckCodeApp';
 
 const RouterComponent = () => (
   <Router>
-    <Scene key="Login" direction="vertical" hideNavBar initial>
+    <Scene key="Login" direction="vertical" hideNavBar >
       <Scene key="loginForm" component={LoginApp} />
       <Scene key="registerForm" component={RegisterApp} direction="vertical" />
       <Scene key="forgotForm" component={ForgotApp} />
@@ -31,6 +31,7 @@ const RouterComponent = () => (
         hideNavBar={false}
       />
       <Scene
+        initial
         key="upProduct"
         component={UpProductApp}
         title="Đăng tin"
