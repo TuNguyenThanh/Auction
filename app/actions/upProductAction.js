@@ -1,5 +1,7 @@
 import RNFetchBlob from 'react-native-fetch-blob';
 import { DOMAIN_NAME } from '../store/APIConfig';
+import { Alert } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import {
   UP_PRODUCT_NAME_CHANGED, UP_PRODUCT_START_PRICE_CHANGED, UP_PRODUCT_CEIL_PRICE_CHANGED,
   UP_PRODUCT_DESCRIPTION_CHANGED, UP_PRODUCT_LOAD,
@@ -73,11 +75,18 @@ export const uploadProduct = (token, image, productName, productStartPrice, prod
 
 
 export const uploadSuccess = (dispatch, success) => {
-  console.log('success');
   dispatch({
     type: UP_PRODUCT_LOAD_SUCCESS,
     payload: success
   });
+  Alert.alert(
+    'Đăng sản phẩm',
+    'Đăng sản thành công!',
+    [
+      { text: 'Đồng ý', onPress: () => Actions.pop() },
+    ],
+    { cancelable: false }
+  );
 };
 
 export const uploadError = (dispatch, error) => {
@@ -85,4 +94,12 @@ export const uploadError = (dispatch, error) => {
     type: UP_PRODUCT_LOAD_ERROR,
     payload: error
   });
+  Alert.alert(
+    'Đăng sản phẩm',
+    'Đăng sản thất bại!',
+    [
+      { text: 'Đồng ý', onPress: () => console.log('error') },
+    ],
+    { cancelable: false }
+  );
 };

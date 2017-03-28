@@ -48,16 +48,17 @@ class LoginForm extends Component {
 
   createAccount() {
     const { firstname, lastname, email, phone, username, password, repassword } = this.props;
+    let emailTrim = email.replace(/^\s+|\s+$/gm, '');
     if (!firstname) {
       this.message('Bạn chưa điền Tên');
     } else {
       if (!lastname) {
         this.message('Bạn chưa điền Họ');
       } else {
-        if (!email) {
+        if (!emailTrim) {
           this.message('Bạn chưa điền Email');
         } else {
-          if (!this.validateEmail(email)) {
+          if (!this.validateEmail(emailTrim)) {
             this.message('Địa chỉ email không hợp lệ');
           } else {
             if (!phone) {
@@ -66,19 +67,23 @@ class LoginForm extends Component {
               if (!username) {
                 this.message('Bạn chưa điền tên đăng nhập');
               } else {
-                if (!password) {
-                  this.message('Bạn chưa điền mật khẩu');
+                if(username.length < 6) {
+                  this.message('Tên đăng nhập ít nhất 6 ký tự');
                 } else {
-                  if (password.length < 6) {
-                    this.message('Mật khẩu ít nhất 6 ký tự');
+                  if (!password) {
+                    this.message('Bạn chưa điền mật khẩu');
                   } else {
-                    if (!repassword) {
-                      this.message('Bạn chưa điền nhập lại mật khẩu');
+                    if (password.length < 6) {
+                      this.message('Mật khẩu ít nhất 6 ký tự');
                     } else {
-                      if (password !== repassword) {
-                        this.message('Mật khẩu và nhập lại phải giống nhau');
+                      if (!repassword) {
+                        this.message('Bạn chưa điền nhập lại mật khẩu');
                       } else {
-                        this.props.createAccount(firstname, lastname, email, phone, username, md5(password));
+                        if (password !== repassword) {
+                          this.message('Mật khẩu và nhập lại phải giống nhau');
+                        } else {
+                          this.props.createAccount(firstname, lastname, email, phone, username, md5(password));
+                        }
                       }
                     }
                   }

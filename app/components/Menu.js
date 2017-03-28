@@ -37,7 +37,7 @@ class Menu extends Component {
   }
 
   handleVersionApp() {
-    Alert.alert('Version', 'Version 1.0 Blue Shark Team');
+    Alert.alert('Version', 'Version 1.0.2 Blue Shark Team');
   }
 
   render() {
@@ -101,7 +101,7 @@ class Menu extends Component {
               <Text style={styles.menuItemText}>Phiên bản hiện tại</Text>
               <View style={{ flex: 1 }}></View>
               <View >
-                <Text style={styles.menuItemText}>1.0v</Text>
+                <Text style={styles.menuItemText}>1.0.2v</Text>
               </View>
             </TouchableOpacity>
             {/*Item - 2*/}
@@ -126,7 +126,7 @@ class Menu extends Component {
                 style={styles.menuItemImageCustom}
                 source={require('./images/Email_icon.png')}
               />
-              <Text style={styles.menuItemTextCustom}>Gửi email gớp ý</Text>
+              <Text style={styles.menuItemTextCustom}>Gửi email góp ý</Text>
             </TouchableOpacity>
             {/*Item - 5*/}
             <TouchableOpacity

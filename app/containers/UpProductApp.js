@@ -20,7 +20,10 @@ const mapStateToProps = (state) => {
     productStartPrice: state.UpProduct.productStartPrice,
     productCeilPrice: state.UpProduct.productCeilPrice,
     productDescription: state.UpProduct.productDescription,
-    token: state.Login.token
+    token: state.Login.token,
+    loading: state.UpProduct.loading,
+    success: state.UpProduct.success,
+    error: state.UpProduct.error
   };
 };
 

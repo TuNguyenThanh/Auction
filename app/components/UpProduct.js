@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import { Picker } from 'native-base';
+import { Picker, Button, Spinner } from 'native-base';
 import { Input } from './common';
 
 class UpProduct extends Component {
@@ -117,7 +117,6 @@ class UpProduct extends Component {
     ImagePicker.openPicker({
       width: 300,
       height: 400,
-      cropping: true,
       includeBase64: true,
       compressImageQuality: 1,
     }).then(image => {
@@ -126,21 +125,20 @@ class UpProduct extends Component {
         //image: {uri: `data:${image.mime};base64,`
         //+ image.data, width: image.width, height: image.height},
       });
-    }).catch(e => Alert.alert(e));
+    }).catch(e => console.log(e));
   }
 
   onPressCamera() {
     ImagePicker.openCamera({
       width: 300,
       height: 400,
-      cropping: true,
       includeBase64: true,
       compressImageQuality: 1,
     }).then(image => {
       this.setState({
         image: { uri: image.path, width: image.width, height: image.height },
       });
-    }).catch(e => Alert.alert(e));
+    }).catch(e => console.log(e));
   }
 
   chooseImage() {
@@ -195,6 +193,21 @@ class UpProduct extends Component {
     });
   }
 
+  renderButtonLogin() {
+    if (!this.props.loading) {
+      return (
+        <TouchableOpacity style={styles.buttonUp} onPress={this.onPressUpProduct.bind(this)}>
+          <Text style={styles.buttonTextUp}>ĐĂNG SẢN PHẨM</Text>
+        </TouchableOpacity>
+      );
+    }
+    return (
+      <TouchableOpacity style={styles.buttonUp}>
+        <Spinner color='white' />
+      </TouchableOpacity>
+    );
+  }
+
   render() {
     return (
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -218,7 +231,7 @@ class UpProduct extends Component {
           onChangeText={this.onChangedProductCeilPrice.bind(this)}
         />
         <Input
-          style={{ height: 50, fontSize: 18 }}
+          style={{ height: 80, fontSize: 18 }}
           lable="Miêu tả sản phẩm"
           multiline
           editable
@@ -289,9 +302,7 @@ class UpProduct extends Component {
             />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.buttonUp} onPress={this.onPressUpProduct.bind(this)}>
-          <Text style={styles.buttonTextUp}>ĐĂNG SẢN PHẨM</Text>
-        </TouchableOpacity>
+        {this.renderButtonLogin()}
       </ScrollView>
     );
   }

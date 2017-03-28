@@ -103,8 +103,10 @@ const styles = {
 
   logo: {
     width: 200,
-    height: 70,
-    marginBottom: 30
+    height: 75,
+    marginBottom: 30,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   form: {
@@ -134,7 +136,9 @@ const styles = {
     width: 26,
     height: 26,
     marginTop: 20,
-    marginLeft: 10
+    marginLeft: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 };
 
