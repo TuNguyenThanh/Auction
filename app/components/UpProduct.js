@@ -118,6 +118,7 @@ class UpProduct extends Component {
       width: 300,
       height: 400,
       includeBase64: true,
+      mediaType: 'photo',
       compressImageQuality: 1,
     }).then(image => {
       this.setState({
@@ -133,6 +134,7 @@ class UpProduct extends Component {
       width: 300,
       height: 400,
       includeBase64: true,
+      mediaType: 'photo',
       compressImageQuality: 1,
     }).then(image => {
       this.setState({
